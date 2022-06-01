@@ -1,7 +1,5 @@
 from flask import Flask, render_template, url_for, session, redirect, g, make_response, current_app, request, flash, get_flashed_messages
 from werkzeug.security import generate_password_hash, check_password_hash
-from admin.admin import admin
-from admin.manage_data import Data
 import sqlite3
 import os
 import json
