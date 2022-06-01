@@ -9,7 +9,7 @@ from manage_mails.send import Sender
 
 ##WSGI - приложение
 app = Flask(__name__, template_folder="templates", static_folder="static")
-app.register_blueprint(admin, url_prefix="/admin") ##Регистрируем blueprint админки
+#app.register_blueprint(admin, url_prefix="/admin") ##Регистрируем blueprint админки
 
 ##Конфиг
 SECRET_KEY = "0ewaf0asdfjao90j32f03kfoasd,coamda-0e1=-efo=asdkcaskcoasdjf0329qgj=q20=0=rcvb,cvolmbolasamfoasdf-sadf-#$#$$)@_R)KIFJSDFJ9ojasdgj"
