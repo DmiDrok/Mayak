@@ -54,20 +54,20 @@ def before_request():
     admin = is_admin()
 
     ##Создаём папку где будут храниться посты для блога если она ещё не сделана
-    if not os.path.exists(os.path.join(current_app.root_path, "static", "posts")):
-        os.mkdir(os.path.join(current_app.root_path, "static", "posts"))
+    #if not os.path.exists(os.path.join(current_app.root_path, "static", "posts")):
+        #os.mkdir(os.path.join(current_app.root_path, "static", "posts"))
 
     ##Если не сделан файл где мы храним данные админа - делаем его и засовываем туда логин с паролем
-    if not os.path.exists(os.path.join(current_app.root_path, "admin_data.json")):
-        login = "admin"
+    #if not os.path.exists(os.path.join(current_app.root_path, "admin_data.json")):
+        #login = "admin"
 
-        with open(os.path.join(current_app.root_path, "admin_data.json"), "w") as jsonfile:
-            dict_data = {
-                "login": f"{login}",
-                "password": f"{generate_password_hash('12345')}"
-            }
+        #with open(os.path.join(current_app.root_path, "admin_data.json"), "w") as jsonfile:
+            #dict_data = {
+                #"login": f"{login}",
+                #"password": f"{generate_password_hash('12345')}"
+            #}
 
-            json.dump(dict_data, jsonfile)
+            #json.dump(dict_data, jsonfile)
 
 
     ##Сохраняем подключение в контексте запроса
