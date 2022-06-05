@@ -2255,14 +2255,19 @@ footer{
 .form_contact_here .errors h3{
 	text-align: center;
 	text-decoration: underline;
+	border: 1px solid rgba(100, 100, 100, 0.2);
+	padding: 15px;
+	color: #fff;
 }
 
 .form_contact_here .errors h3.error{
-	color: #c30000;
+	
+	background-color: rgba(237, 75, 75, 0.5);
 }
 
 .form_contact_here .errors h3.success{
-	color: #24c0a7;
+	
+	background-color: rgba(18, 198, 141, 0.3);
 }
 
 .form_contact_here form{

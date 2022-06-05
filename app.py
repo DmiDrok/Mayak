@@ -5,7 +5,8 @@ import os
 import json
 from forms import ContactSocio, ContactYurist
 import re
-from manage_mails.send import Sender
+from manage_mails.send import Sender, html_text
+from flask_mail import  Mail, Message
 
 ##WSGI - приложение
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -15,6 +16,21 @@ app = Flask(__name__, template_folder="templates", static_folder="static")
 SECRET_KEY = "0ewaf0asdfjao90j32f03kfoasd,coamda-0e1=-efo=asdkcaskcoasdjf0329qgj=q20=0=rcvb,cvolmbolasamfoasdf-sadf-#$#$$)@_R)KIFJSDFJ9ojasdgj"
 CSRF_ENABLED = True
 app.config.from_object(__name__)
+app.config["MAIL_SERVER"] = "smtp.mail.ru"
+app.config["MAIL_PORT"] = 587
+app.config["MAIL_USE_TLS"] = True
+app.config["MAIL_USERNAME"] = "to-mayak@mail.ru"
+app.config["MAIL_PASSWORD"] = "L86PUUzBTY6NKxXybFs4"
+
+mail = Mail(app) ##Объект для отправки сообщений
+
+##Функция отправки сообщения
+def send_mail(subj, telefon_user, email, content, *args, **kwargs):
+    msg = Message(subject=subj, sender=app.config["MAIL_USERNAME"], recipients=["drobkov155099@gmail.com"])
+    msg.html = html_text.replace("{{subject}}", subj).replace("{{telefon}}", telefon_user).replace("{{content}}", content).replace("{{email}}", email)
+    
+    with app.app_context():
+        mail.send(msg)
 
 ##Объект с помощью которого будем отсылать сообщения
 Sender = Sender()
@@ -127,9 +143,11 @@ def socio_psych():
                 print(f"Пользователь указал корректный телефон: {telefon_user}")
 
                 ##Отправляем и выкидываем флеш-сообщение
-                Sender.send_socio_psych("Социально-психологическая помощь.", telefon_user, email_user, message_user)
-                flash("Заявка будет рассмотрена в течении 2-х дней.", category="success")
+                #Sender.send_socio_psych("Социально-психологическая помощь.", telefon_user, email_user, message_user)
+                send_mail("Социально-психологическая помощь.", telefon_user, email_user, message_user)
 
+                flash("Заявка будет рассмотрена в течении 2-х дней.", category="success")
+                return redirect(url_for("socio_psych"))
             else:
                 print(f"Пользователь указал НЕкорректный телефон: {telefon_user}")
                 flash("Указан неккоректный формат телефона!", category="error")
@@ -163,8 +181,10 @@ def yurist():
                 print(f"Пользователь указал корректный телефон: {telefon_user}")
 
                 ##Отправляем и выкидываем флеш-сообщение
-                Sender.send_socio_psych("Юридические услуги.", telefon_user, email_user, message_user)
+                #Sender.send_socio_psych("Юридические услуги.", telefon_user, email_user, message_user)
+                send_mail("Юридические услуги.", telefon_user, email_user, message_user)
                 flash("Заявка будет рассмотрена в течении 2-х дней.", category="success")
+                return redirect(url_for("yurist"))
             else:
                 print(f"Пользователь указал НЕкорректный телефон: {telefon_user}")
                 flash("Указан неккоректный формат телефона!", category="error")
