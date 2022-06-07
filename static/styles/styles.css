@@ -76,6 +76,7 @@ header{
 	height: 185px;
 	width: 100%;
 	z-index: 1000;
+	background: #f5f7fb;
 }
 #image_header{
 	width: 85%;
@@ -2229,6 +2230,7 @@ footer{
 .titles_prices_services ul li p:nth-child(2) b{
 	margin-left: 2rem;
 	font-weight: 700;
+	white-space: nowrap;
 }
 
 .titles_prices_services ul li:nth-child(1)::before{
@@ -2308,6 +2310,48 @@ footer{
 	grid-row-gap: 15px;
 }
 
+.feedback_block .container .form_contact_here form input{
+	width: 100%;
+}
+
+/*.feedback_block .container .form_contact_here form input.invalid{
+	background-color: #ed4b4b80;
+	border: 1px solid #000;
+	color: #fff;
+	display: block;
+}*/
+
+.feedback_block .container .form_contact_here form input.invalid{
+	border: 2px solid #f25151;
+}
+
+.feedback_block .container .form_contact_here form input.invalid::selection{
+	background-color: #f25151;
+}
+
+.feedback_block .container .form_contact_here form .input.invalid::-webkit-input-placeholder{
+	color: #fff !important;
+	opacity: 1;
+}
+
+.feedback_block .container .form_contact_here .input_block{
+	position: relative;
+}
+
+.feedback_block .container .form_contact_here .invalid_input_block::before{
+	content: "*";
+	color: red;
+	position: absolute;
+	left: -30px;
+	top: calc(50% - 10px);
+	font-size: 20px;
+}
+
+.feedback_block .container .form_contact_here .invalid_input_block .input_error{
+	color: red;
+	text-decoration: underline;
+}
+
 .feedback_block .container .form_contact_here form input:not(input[type="submit"]){
 	padding: 10px 15px;
 	font-size: 16px;
@@ -2319,6 +2363,7 @@ footer{
 	height: 250px;
 	padding: 10px 15px;
 	font-family: 'Montserrat', Tahoma, Verdana, Geneva, sans-serif;
+	font-size: 16px;
 }
 
 .feedback_block .container .form_contact_here form label{
@@ -2699,6 +2744,79 @@ footer{
 	justify-self: center;
 }
 
+.upper_popup{
+	display: block;
+	position: fixed;
+	width: 560px;
+	background-color: #fff;
+	top: 20px;
+	right: 50%;
+	margin-right: -280px;
+	border-radius: 5px;
+	z-index: 1000000;
+	padding: 1.5rem;
+	transition-duration: 1s;
+	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.5);
+}
+
+.upper_popup .content_upper_popup{
+	display: grid;
+	justify-content: center;
+	align-content: center;
+	height: 100%;
+	grid-row-gap: 1.5rem;
+}
+
+.upper_popup .content_upper_popup h3{
+	font-size: 25px;
+}
+
+
+.upper_popup .content_upper_popup h3::first-letter{
+	color: #24c0a7;
+}
+
+.upper_popup .content_upper_popup p{
+	font-size: 17px;
+}
+
+#close_upper_popup{
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	font-size: 24px;
+	font-style: normal;
+	color: #24c0a7;
+	font-weight: 600;
+	cursor: pointer;
+	transition-duration: .3s;
+}
+
+#close_upper_popup:hover{
+	color: #159898;
+}
+
+#understand_popup{
+	background-color: #24c0a7;
+	width: 30%;
+	border: none;
+	border-radius: 3px;
+	justify-self: right;
+	padding: 10px 20px;
+	cursor: pointer;
+	transition-duration: .3s;
+}
+
+#understand_popup:hover{
+	background-color: #159898;
+}
+
+#understand_popup span, #understand_popup a{
+	color: #fff;
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 600;
+	font-size: 16px;
+}
 
 /**********************************/
 /*Медиа-Запросы*/
@@ -2746,6 +2864,9 @@ footer{
 /*Адаптация для планшетов*/
 @media(max-width: 1024px){
 	/***Адаптация хедера***/
+	header{
+		position: fixed;
+	}
 	#sup_block_header{
 		grid-template-columns: 150px;
 		grid-column-gap: 3rem;

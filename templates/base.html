@@ -46,10 +46,10 @@
                     <i class="dot"></i>
     
                     <ul id="menu_social">
-                        <li class="social_el"><a href="#" target="_blank" class="social_link">Контакты</a></li>
-                        <li class="social_el"><a href="https://vk.com/mcmayak" target="_blank" class="social_link">ВКонтакте</a></li>
+                        <li class="social_el"><a href="#" target="_blank" class="social_link" title="Контакты">Контакты</a></li>
+                        <li class="social_el"><a href="https://vk.com/mcmayak" target="_blank" class="social_link" title="Группа ВКонтакте">ВКонтакте</a></li>
                         <!--<li class="social_el"><a href="{{ url_for('all_posts') }}" class="social_link">Новости</a></li>-->
-                        <li class="social_el telefon_children"><span class="social_link">Телефон доверия</span></li>
+                        <li class="social_el telefon_children"><span class="social_link" title="Телефон доверия">Телефон доверия</span></li>
                     </ul>
                 </div>
     
@@ -63,23 +63,23 @@
     
                     <ul id="menu_social" class="burger_list">
                         <li class="social_el">
-                            <a href="{{ url_for('socio_psych') }}" class="social_link">Социально-психологическая помощь</a>
+                            <a href="{{ url_for('socio_psych') }}" class="social_link" title="Социально-психологическая помощь">Социально-психологическая помощь</a>
                         </li>
     
                         <li class="social_el">
-                            <a href="{{ url_for('yurist') }}" class="social_link">Юридические услуги</a>
+                            <a href="{{ url_for('yurist') }}" class="social_link" title="Юридические услуги">Юридические услуги</a>
                         </li>
     
                         <li class="social_el">
-                            <a href="{{ url_for('dom') }}" class="social_link">МООМ "ДОМ"</a>
+                            <a href="{{ url_for('dom') }}" class="social_link" title="МООМ ДОМ">МООМ "ДОМ"</a>
                         </li>
     
                         <li class="social_el">
-                            <a href="{{ url_for('school_dance') }}" class="social_link">Школа танца</a>
+                            <a href="{{ url_for('school_dance') }}" class="social_link" title="Школа танца">Школа танца</a>
                         </li>
     
                         <li class="social_el">
-                            <a href="{{ url_for('gym') }}" class="social_link">Тренажёрный зал</a>
+                            <a href="{{ url_for('gym') }}" class="social_link" title="Тренажёрный зал">Тренажёрный зал</a>
                         </li>
                     </ul>
                 </div>	
@@ -95,27 +95,27 @@
                             </span>
     
                             <ul id="services_menu">
-                                <li class="services_el"><a href="{{ url_for('socio_psych') }}" class="services_link">Социально-психологическая помощь</a></li>
-                                <li class="services_el"><a href="{{ url_for('yurist') }}" class="services_link">Юридические услуги</a></li>
+                                <li class="services_el"><a href="{{ url_for('socio_psych') }}" class="services_link" title="Социально-психологическая помощь">Социально-психологическая помощь</a></li>
+                                <li class="services_el"><a href="{{ url_for('yurist') }}" class="services_link" title="Юридические услуги">Юридические услуги</a></li>
                             </ul>
                         </li>
     
                         <li class="nav_element">
-                            <a href="{{ url_for('dom') }}" class="nav_link {{ links['dom'] }}">
+                            <a href="{{ url_for('dom') }}" class="nav_link {{ links['dom'] }}" title="МООМ ДОМ">
                                 МООМ "ДОМ"
                                 <span class="invisible"></span>
                             </a>
                         </li>
     
                         <li class="nav_element">
-                            <a href="{{ url_for('school_dance') }}" class="nav_link {{ links['school_dance'] }}">
+                            <a href="{{ url_for('school_dance') }}" class="nav_link {{ links['school_dance'] }}" title="Школа танца">
                                 Школа танца
                                 <span class="invisible"></span>
                             </a>
                         </li>
     
                         <li class="nav_element">
-                            <a href="{{ url_for('gym') }}" class="nav_link {{ links['gym'] }}" id="trenya_link">
+                            <a href="{{ url_for('gym') }}" class="nav_link {{ links['gym'] }}" id="trenya_link" title="Тренажёрный зал">
                                 Тренажёрный зал
                                 <span class="invisible"></span>
                             </a>

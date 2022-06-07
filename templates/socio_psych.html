@@ -2,6 +2,9 @@
 
 {% block content %}
 {{ super() }}
+
+{% include "needful/upper_popup.html" %}
+
 <div class="wrapper_first psiholog__wrapper_first">
 	<div id="dark_background"></div>
 
@@ -369,49 +372,28 @@
 <div class="feedback_block psiholog__wrapper_sixth">
 	<div class="container">
 		<div class="title_feedback title_contact_psych">
-			<h2 id="scroll_here_feedback">Вы можете оставить свою заявку прямо сейчас</h2>
+			<h2 id="scroll_here_feedback">Вы можете оставить свою заявку прямо сейчас.</h2>
 		</div>
 
 		<div class="form_contact_here">
-
-			<!--Флеш-сообщения тут-->
-			{% for category, msg in get_flashed_messages(True) %}
-				<div class="errors">
-					<h3 class="{{ category }}">
-						{{ msg }}
-					</h3>
-				</div>
-			{% endfor %}
-			
-			{% if form.telefon.errors %}
-				{% for error in form.telefon.errors %}
-					<div class="errors">
-						<h3 class="error">
-							{{ error }}
-						</h3>
-					</div>
-				{% endfor %}
-			{% endif %}
-
-			{% if form.email.errors %}
-				{% for error in form.email.errors %}
-					<div class="errors">
-						<h3 class="error">
-							{{ error }}
-						</h3>
-					</div>
-				{% endfor %}
-			{% endif %}
-
-			<form action="{{ url_for('socio_psych') }}" method="POST">
-				{{ form.hidden_tag() }}
-
-				{{ form.telefon.label() }} {{ form.telefon(value=telefon_user) }}
-				{{ form.email.label() }} {{ form.email(value=email_user) }}
-				{{ form.textarea_msg.label() }} {{ form.textarea_msg(value=message_user) }}
-				{{ form.submit_btn() }}
-			</form>
+			{% include "needful/feedback_form.html" %}
 		</div>
 	</div>
 </div>
+
+<script>
+	let ClosePopup = document.querySelector("#close_upper_popup");
+	let UpperPopup = document.querySelector(".upper_popup");
+	let UnderstandBtn = document.querySelector("#understand_popup");
+
+	ClosePopup.onclick = function() {
+		UpperPopup.style.top = -9999 + "px";
+		UpperPopup.style.opacity = "0";
+	}
+
+	UnderstandBtn.onclick = function() {
+		UpperPopup.style.top = -9999 + "px";
+		UpperPopup.style.opacity = "0";
+	}
+</script>
 {% endblock %}

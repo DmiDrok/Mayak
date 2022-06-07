@@ -1,0 +1,26 @@
+{% if restart_page_sended_success == "True" %}
+	<div class="upper_popup">
+
+			<div class="content_upper_popup">
+				<h3>Сообщение успешно отправлено!</h3>
+				<p>Заявка будет рассмотрена в течение 2-х дней. Ожидайте звонок на свой номер.</p>
+				<button id="understand_popup">
+					<span>Понятно</span>
+				</button>
+				<i id="close_upper_popup" title="Закрыть?">x</i>
+			</div>
+	</div>
+{% endif %}
+
+{% if not_correct_form %}
+<div class="upper_popup error">
+	<div class="content_upper_popup">
+		<h3>Форма обратной связи заполнена неккоректно!</h3>
+		<p>Вам следует исправить ошибки в ней для отправки заявки.</p>
+		<button id="understand_popup">
+			<a href="#feedback_form">Исправить!</a>
+		</button>
+		<i id="close_upper_popup" title="Закрыть?">x</i>
+	</div>
+</div>
+{% endif %}

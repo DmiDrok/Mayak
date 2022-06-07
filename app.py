@@ -1,12 +1,21 @@
 from flask import Flask, render_template, url_for, session, redirect, g, make_response, current_app, request, flash, get_flashed_messages
+from flask_mail import  Mail, Message
+
+
 from werkzeug.security import generate_password_hash, check_password_hash
+
+
+from forms import ContactSocio, ContactYurist
+
+
+from manage_mails.send import html_text
+
+
 import sqlite3
 import os
 import json
-from forms import ContactSocio, ContactYurist
 import re
-from manage_mails.send import Sender, html_text
-from flask_mail import  Mail, Message
+import threading
 
 ##WSGI - приложение
 app = Flask(__name__, template_folder="templates", static_folder="static")
@@ -22,18 +31,17 @@ app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USERNAME"] = "to-mayak@mail.ru"
 app.config["MAIL_PASSWORD"] = "L86PUUzBTY6NKxXybFs4"
 
+
 mail = Mail(app) ##Объект для отправки сообщений
 
 ##Функция отправки сообщения
 def send_mail(subj, telefon_user, email, content, *args, **kwargs):
     msg = Message(subject=subj, sender=app.config["MAIL_USERNAME"], recipients=["drobkov155099@gmail.com"])
-    msg.html = html_text.replace("{{subject}}", subj).replace("{{telefon}}", telefon_user).replace("{{content}}", content).replace("{{email}}", email)
+    #msg.html = html_text.replace("{{subject}}", subj).replace("{{telefon}}", telefon_user).replace("{{content}}", content).replace("{{email}}", email)
     
     with app.app_context():
+        msg.html = render_template("needful/tmpl_to_email.html", subject=subj, telefon=telefon_user, content=content, email=email)
         mail.send(msg)
-
-##Объект с помощью которого будем отсылать сообщения
-Sender = Sender()
 
 ##Для класса .active_link в навигации
 links = {
@@ -64,36 +72,9 @@ admin = False
 data = None
 @app.before_request
 def before_request():
-    global admin
-    admin = is_admin()
-
-    ##Создаём папку где будут храниться посты для блога если она ещё не сделана
-    #if not os.path.exists(os.path.join(current_app.root_path, "static", "posts")):
-        #os.mkdir(os.path.join(current_app.root_path, "static", "posts"))
-
-    ##Если не сделан файл где мы храним данные админа - делаем его и засовываем туда логин с паролем
-    #if not os.path.exists(os.path.join(current_app.root_path, "admin_data.json")):
-        #login = "admin"
-
-        #with open(os.path.join(current_app.root_path, "admin_data.json"), "w") as jsonfile:
-            #dict_data = {
-                #"login": f"{login}",
-                #"password": f"{generate_password_hash('12345')}"
-            #}
-
-            #json.dump(dict_data, jsonfile)
-
-
-    ##Сохраняем подключение в контексте запроса
-    if not hasattr(g, "conn"):
-        with sqlite3.connect("Posts.db") as conn:
-            conn.row_factory = sqlite3.Row
-            cur = conn.cursor()
-            conn.row_factory = sqlite3.Row
-
-            g.conn = conn
-
-    #data = Data(g.conn)
+    """До первого запроса будем устанавливать время жизни сессии. По умолчанию - 1 час"""
+    session.permanent = True
+    app.permanent_session_lifetime = 60*60
 
 ##Обработчик главной страницы
 @app.route("/main")
@@ -130,6 +111,8 @@ def socio_psych():
     telefon_user = ""
     email_user = ""
     message_user = ""
+    
+    not_correct_form = None
 
     ##Обрабатываем форму
     if request.method == "POST":
@@ -144,14 +127,24 @@ def socio_psych():
 
                 ##Отправляем и выкидываем флеш-сообщение
                 #Sender.send_socio_psych("Социально-психологическая помощь.", telefon_user, email_user, message_user)
-                send_mail("Социально-психологическая помощь.", telefon_user, email_user, message_user)
+                #send_mail("Социально-психологическая помощь.", telefon_user, email_user, message_user)
+                
+                thread_send_mail = threading.Thread(target=send_mail, args=("Социально-психологическая помощь.", telefon_user, email_user, message_user))
+                thread_send_mail.start()
+                thread_send_mail.join()
 
+                session["socio_psych_sended"] = True ##Пользователь отправил заявку и мы это сохраним (дальше будем использовать для блокировки формы)
                 flash("Заявка будет рассмотрена в течении 2-х дней.", category="success")
-                return redirect(url_for("socio_psych"))
+                return redirect(url_for("socio_psych", send=True))
             else:
                 print(f"Пользователь указал НЕкорректный телефон: {telefon_user}")
                 flash("Указан неккоректный формат телефона!", category="error")
+                not_correct_form = True
+        else:
+            not_correct_form = True
 
+    send = request.args.get("send", None) if session.get("socio_psych_sended", None) is not None else False
+    block_form = session.get("socio_psych_sended", None) ##Если пользователь отправил форму - будет True и форму отображать не будем
 
     return render_template(
         "socio_psych.html",
@@ -160,15 +153,23 @@ def socio_psych():
         form=form,
         telefon_user=telefon_user,
         email_user=email_user,
-        message_user=message_user
+        message_user=message_user,
+        restart_page_sended_success = send,
+        block_form=block_form,
+        not_correct_form=not_correct_form,
         )
 
 ##Обработчик страницы юристов
 @app.route("/yurist", methods=["POST", "GET"])
 def yurist():
     reset_all_save_one(None)
-
     form = ContactYurist()
+
+    telefon_user = ""
+    email_user = ""
+    message_user = ""
+
+    not_correct_form = None
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -182,14 +183,41 @@ def yurist():
 
                 ##Отправляем и выкидываем флеш-сообщение
                 #Sender.send_socio_psych("Юридические услуги.", telefon_user, email_user, message_user)
-                send_mail("Юридические услуги.", telefon_user, email_user, message_user)
+                #send_mail("Юридические услуги.", telefon_user, email_user, message_user)
+                
+                thread_send_mail = threading.Thread(target=send_mail, args=("Юридические услуги.", telefon_user, email_user, message_user))
+                thread_send_mail.start()
+                thread_send_mail.join()
+
+
+                session["yurist_sended"] = True ##Пользователь отправил заявку и мы это сохраним (дальше будем использовать для блокировки формы)
                 flash("Заявка будет рассмотрена в течении 2-х дней.", category="success")
-                return redirect(url_for("yurist"))
+                return redirect(url_for("yurist", send=True))
             else:
                 print(f"Пользователь указал НЕкорректный телефон: {telefon_user}")
                 flash("Указан неккоректный формат телефона!", category="error")
+                not_correct_form = True
+        else:
+            not_correct_form = True
 
-    return render_template("yurist.html", title="Юридическая помощь", links=links, admin=admin, form=form)
+
+    send = request.args.get("send") if session.get("yurist_sended", None) is not None else False
+    block_form = session.get("yurist_sended", None) ##Если пользователь отправил форму - будет True и форму отображать не будем
+    
+    print(not_correct_form)
+    return render_template(
+        "yurist.html",
+        title="Юридическая помощь", 
+        links=links, 
+        admin=admin, 
+        form=form,
+        telefon_user=telefon_user,
+        email_user=email_user,
+        message_user=message_user,
+        restart_page_sended_success = send,
+        block_form=block_form,
+        not_correct_form=not_correct_form
+        )
 
 @app.route("/send_mail_socio_psych")
 def send_mail_socio_psych():

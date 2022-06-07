@@ -1,0 +1,74 @@
+{% if not block_form %}
+    <!--Флеш-сообщения тут
+    {% for category, msg in get_flashed_messages(True) %}
+        <div class="errors">
+            <h3 class="{{ category }}">
+                {{ msg }}
+            </h3>
+        </div>
+    {% endfor %}-->
+    
+    <!--{% if form.telefon.errors %}
+        {% for error in form.telefon.errors %}
+            <div class="errors">
+                <h3 class="error">
+                    {{ error }}
+                </h3>
+            </div>
+        {% endfor %}
+    {% endif %}-->
+
+    <!--{% if form.email.errors %}
+        {% for error in form.email.errors %}
+            <div class="errors">
+                <h3 class="error">
+                    {{ error }}
+                </h3>
+            </div>
+        {% endfor %}
+    {% endif %}-->
+
+    <form action="" method="POST" id="feedback_form">
+        {{ form.hidden_tag() }}
+
+        {{ form.telefon.label() }}
+        
+        {% if form.telefon.errors %}
+            <div class="input_block invalid_input_block">
+                {% for err in form.telefon.errors %}
+                    {{ form.telefon(value=telefon_user, class="invalid", placeholder=err) }}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="input_block">
+                {{ form.telefon(value=telefon_user) }}
+            </div>
+        {% endif %}
+        
+        {{ form.email.label() }} 
+        
+            {% if form.email.errors %}
+                <div class="input_block invalid_input_block">
+                    {% for err in form.email.errors %}				
+                        {{ form.email(value=email_user, class="invalid", placeholder=err) }}
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="input_block">
+                    {{ form.email(value=email_user) }}
+                </div>
+            {% endif %}
+
+        {{ form.textarea_msg.label() }}
+        {{ form.textarea_msg(value=message_user) }}
+        
+
+        {{ form.submit_btn() }}
+    </form>
+{% else %}
+    <div class="errors">
+        <h3 class="success">
+            Заявка успешно отправлена и будет рассмотрена в течение 2-х дней. Ожидайте звонок на свой номер.
+        </h3>
+    </div>
+{% endif %}
