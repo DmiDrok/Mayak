@@ -16,7 +16,10 @@
 		<div class="slider">
 			<!--<input type="radio" name="slide" id="s1">
 			<input type="radio" name="slide" id="s2">   
-			<input type="radio" name="slide" id="s3">-->                     
+			<input type="radio" name="slide" id="s3">-->    
+
+			<div id="slider_to_left" class="nav_main_slider"></div>
+			<div id="slider_to_right" class="nav_main_slider"></div>
 
 			<div class="slider_line">
 				<section class="slider_element first_slide">
@@ -132,6 +135,9 @@
 </div>
 
 <div class="wrapper_third">
+	<!--<div id="blue_slider_left" class="blue_slider_nav"></div>
+	<div id="blue_slider_right" class="blue_slider_nav"></div>-->
+
 	<div class="container_slider">
 		<div class="container_line">
 			<section class="block">
@@ -333,23 +339,6 @@
 	</div>
 </div>
 
-<section id="popup">
-	<div class="content_popup">
-		<h3>Детский телефон доверия</h3>
-
-		<div class="text_popup">
-			<p>Детский телефон доверия предназначен для оказания экстренной психологической помощи, для оказания моральной, эмоциональной или духовной поддержки.</p>
-
-			<p>Номер указан снизу, позвоните по нему, если у вас имеются проблемы.</p>
-		</div>
-
-		<button>
-			<a href="tel: 36316">3-63-16</a>
-		</button>
-
-		<span id="close">Х</span>
-	</div>	
-</section>
-
 <script src="{{ url_for('static', filename='javascript/js.js') }}"></script>
+
 {% endblock %}

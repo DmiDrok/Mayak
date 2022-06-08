@@ -1,4 +1,4 @@
-{% if restart_page_sended_success == "True" %}
+{% for cat, msg in get_flashed_messages(True) %}
 	<div class="upper_popup">
 
 			<div class="content_upper_popup">
@@ -10,7 +10,7 @@
 				<i id="close_upper_popup" title="Закрыть?">x</i>
 			</div>
 	</div>
-{% endif %}
+{% endfor %}
 
 {% if not_correct_form %}
 <div class="upper_popup error">

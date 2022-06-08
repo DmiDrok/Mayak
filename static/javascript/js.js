@@ -45,9 +45,12 @@ try{
 	const MAX = Number(sliderLineThird.clientWidth) - Number(document.querySelector(".wrapper_third .container_line .block").clientWidth)
 	const MIN = 0;
 
+	let sliderLeft = document.querySelector("#blue_slider_left");
+	let sliderRight = document.querySelector("#blue_slider_right");
+	
 	let leftOff = 0;
-		next = document.querySelector('#next');
-		prev = document.querySelector('#prev');
+	let next = document.querySelector('#next');
+	let prev = document.querySelector('#prev');
 
 	next.addEventListener("click", function(){
 		leftOff = leftOff + document.querySelector(".wrapper_third .container_line .block").offsetWidth;
@@ -65,6 +68,22 @@ try{
 	 	sliderLineThird.style.left = -leftOff + "px";
 	})
 
+	/*sliderLeft.addEventListener("touchstart", function(e){
+		leftOff = leftOff - document.querySelector(".wrapper_third .container_line .block").offsetWidth;
+	 	if(leftOff < MIN){
+	 		leftOff = MAX;
+	 	}
+	 	sliderLineThird.style.left = -leftOff + "px";
+	})
+
+	sliderRight.addEventListener("touchstart", function(e){
+		leftOff = leftOff + document.querySelector(".wrapper_third .container_line .block").offsetWidth;
+		if(leftOff > MAX){
+			leftOff = MIN;
+		}
+		sliderLineThird.style.left = -leftOff + "px";
+	})*/
+
 	}
 sliderFect()
 }catch(err){
@@ -79,6 +98,9 @@ const sliderLine = document.querySelector('.slider_line');
 let firstButton = document.querySelector("#first_button_bar");
 let secondButton = document.querySelector("#second_button_bar");
 let btn_args = [firstButton, secondButton];
+
+let toLeft = document.querySelector("#slider_to_left");
+let toRight = document.querySelector("#slider_to_right");
 
 function saveOne(btn_args, save_btn){
 
@@ -100,6 +122,16 @@ function sliderScroll(){
 		saveOne(btn_args, firstButton);
 	})
 	secondButton.addEventListener("click", function(){
+		sliderLine.style.left = -document.querySelector(".slider_element").offsetWidth + "px";
+		saveOne(btn_args, secondButton);
+	})
+
+
+	toLeft.addEventListener("touchstart", function(){
+		sliderLine.style.left = document.querySelector(".slider_element").offsetWidth - document.querySelector(".slider_element").offsetWidth; + "px";
+		saveOne(btn_args, firstButton);
+	})
+	toRight.addEventListener("touchstart", function(){
 		sliderLine.style.left = -document.querySelector(".slider_element").offsetWidth + "px";
 		saveOne(btn_args, secondButton);
 	})
@@ -261,21 +293,21 @@ psihoLoad()
 //Попапы на странице Школы Танцев
 function popDanceFunc(){
 	const dancePop = document.querySelectorAll(".dance_popup");
-		popWaltz = document.querySelector(".pop_waltz");
-		popSalza = document.querySelector(".pop_salza");
-		popTango = document.querySelector(".pop_tango");
-		popYoga = document.querySelector(".pop_yoga");
+	const popWaltz = document.querySelector(".pop_waltz");
+	const popSalza = document.querySelector(".pop_salza");
+	const popTango = document.querySelector(".pop_tango");
+	const popYoga = document.querySelector(".pop_yoga");
 
-	let	closeDance = document.querySelector(".dance_close")
-		closeWaltz = document.querySelector(".waltz_close");
-		closeSalza = document.querySelector(".salza_close")
-		closeTango = document.querySelector(".tango_close")
-		closeYoga = document.querySelector(".yoga_close")
+	let	closeDance = document.querySelector(".dance_close"),
+		closeWaltz = document.querySelector(".waltz_close"),
+		closeSalza = document.querySelector(".salza_close"),
+		closeTango = document.querySelector(".tango_close"),
+		closeYoga = document.querySelector(".yoga_close");
 
-	let buttonPop = document.querySelectorAll(".dance_pop");
-		buttonWaltz = document.querySelector(".waltz");
-		buttonSalza = document.querySelector(".salza");
-		buttonTango = document.querySelector(".tango");
+	let buttonPop = document.querySelectorAll(".dance_pop"),
+		buttonWaltz = document.querySelector(".waltz"),
+		buttonSalza = document.querySelector(".salza"),
+		buttonTango = document.querySelector(".tango"),
 		buttonYoga = document.querySelector(".yoga");
 
 		//Общее

@@ -366,7 +366,38 @@ nav{
 	width: 660px;
 	grid-template-rows: 37px auto;
 }
+
+.nav_main_slider{
+	z-index: 1;
+	background-color: #fff;
+	height: 75%;
+	width: 50%;
+	top: 10%;
+	opacity: 0;
+	position: absolute;
+	overflow-x: scroll;
+}
+
+.nav_main_slider .invisible_content{
+	position: relative;
+	height: 100%;
+	width: 100000%;
+	scroll-snap-align: center;
+}
+
+
+#slider_to_left{
+	left: 0;
+}
+
+#slider_to_right{
+	right: 0;
+}
+
 /*Работа с кнопками*/
+.button_sub_text{
+	z-index: 20;
+}
 .button_sub_text button{
 	background: 0;
 	border: 2px solid #30ecf2;
@@ -528,6 +559,33 @@ input[name="slide"]{
 	justify-self: center;
 	color: #fff;
 }
+
+.blue_slider_nav{
+	z-index: 1;
+	background-color: #fff;
+	height: 75%;
+	width: 50%;
+	top: 10%;
+	opacity: 0;
+	position: absolute;
+	overflow-x: scroll;
+}
+
+#blue_slider_left{
+	left: 0;
+}
+
+#blue_slider_right{
+	right: 0;
+}
+
+.blue_slider_nav .invisible_content{
+	position: relative;
+	height: 100%;
+	width: 100000%;
+	scroll-snap-align: center;
+}
+
 /*Кнопки назад/вперёд*/
 .wrapper_third button{
 	position: absolute;
@@ -543,6 +601,7 @@ input[name="slide"]{
 	font-size: 60px;
 	color: #cccccc;
 	transition: .3s;
+	z-index: 10;
 }
 .wrapper_third button:hover{
 	color: #fff;
@@ -565,6 +624,9 @@ input[name="slide"]{
 	transition: left .5s;
 	position: relative;
 	left: 0;
+}
+.wrapper_third .container_line .block .text_locate p{
+	z-index: 10;
 }
 .wrapper_third section{
 	display: grid;
@@ -1241,7 +1303,24 @@ footer{
 	box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.3);
 	width: 1170px;
 	height: 400px;
-	overflow-x: hidden;
+	overflow: hidden;
+	border-radius: 2px;
+}
+.container_dom .dom_slider_nav{
+	z-index: 1;
+	background-color: #fff;
+	height: 75%;
+	width: 50%;
+	top: 10%;
+	opacity: 0;
+	position: absolute;
+	overflow-x: scroll;
+}
+#dom_slider_left{
+	left: 0;
+}
+#dom_slider_right{
+	right: 0;
 }
 .container_dom_line{
 	display: grid;
@@ -2860,6 +2939,24 @@ footer{
 	#burger_mobile{
 		display: grid;
 	}
+	.upper_popup{
+		top: 45px;
+		width: 600px;
+		left: calc(50% - 300px);
+	}
+	.upper_popup .content_upper_popup h3{
+		font-size: 28px;
+	}
+	.upper_popup .content_upper_popup p{
+		font-size: 20px;
+	}
+	#close_upper_popup{
+		font-size: 27px;
+	}
+	#understand_popup span, #understand_popup a {
+		font-size: 19px;
+	}
+
 }
 /*Адаптация для планшетов*/
 @media(max-width: 1024px){
@@ -3345,6 +3442,31 @@ footer{
 		align-items: center;
 		scroll-snap-align: start;
 	}*/
+	.image_profi img{
+		width: 200px;
+		height: 200px;
+	}
+	.text_profi p {
+		font-size: 30px;
+	}
+	.button_psiholog_more span, .submit_psiho a{
+		font-size: 26px;
+	}
+	.upper_popup{
+		top: 60px;
+	}
+	.upper_popup .content_upper_popup h3{
+		font-size: 32px;
+	}
+	.upper_popup .content_upper_popup p{
+		font-size: 24px;
+	}
+	#close_upper_popup{
+		font-size: 31px;
+	}
+	#understand_popup span, #understand_popup a {
+		font-size: 23px;
+	}
 	/*Адаптация общего блока(Присутствует на странице МООМ ДОМА)*/
 	.container_info__all .text_info__all h3 .invisible{
 		height: 4px;

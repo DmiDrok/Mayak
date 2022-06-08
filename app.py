@@ -135,7 +135,8 @@ def socio_psych():
 
                 session["socio_psych_sended"] = True ##Пользователь отправил заявку и мы это сохраним (дальше будем использовать для блокировки формы)
                 flash("Заявка будет рассмотрена в течении 2-х дней.", category="success")
-                return redirect(url_for("socio_psych", send=True))
+                #return redirect(url_for("socio_psych", send=True))
+                return redirect(url_for("socio_psych"))
             else:
                 print(f"Пользователь указал НЕкорректный телефон: {telefon_user}")
                 flash("Указан неккоректный формат телефона!", category="error")
@@ -143,7 +144,7 @@ def socio_psych():
         else:
             not_correct_form = True
 
-    send = request.args.get("send", None) if session.get("socio_psych_sended", None) is not None else False
+    #send = request.args.get("send", None) if session.get("socio_psych_sended", None) is not None else False
     block_form = session.get("socio_psych_sended", None) ##Если пользователь отправил форму - будет True и форму отображать не будем
 
     return render_template(
@@ -154,7 +155,7 @@ def socio_psych():
         telefon_user=telefon_user,
         email_user=email_user,
         message_user=message_user,
-        restart_page_sended_success = send,
+        #restart_page_sended_success = send,
         block_form=block_form,
         not_correct_form=not_correct_form,
         )
@@ -192,7 +193,8 @@ def yurist():
 
                 session["yurist_sended"] = True ##Пользователь отправил заявку и мы это сохраним (дальше будем использовать для блокировки формы)
                 flash("Заявка будет рассмотрена в течении 2-х дней.", category="success")
-                return redirect(url_for("yurist", send=True))
+                #return redirect(url_for("yurist", send=True))
+                return redirect(url_for("yurist"))
             else:
                 print(f"Пользователь указал НЕкорректный телефон: {telefon_user}")
                 flash("Указан неккоректный формат телефона!", category="error")
@@ -201,7 +203,7 @@ def yurist():
             not_correct_form = True
 
 
-    send = request.args.get("send") if session.get("yurist_sended", None) is not None else False
+    #send = request.args.get("send") if session.get("yurist_sended", None) is not None else False
     block_form = session.get("yurist_sended", None) ##Если пользователь отправил форму - будет True и форму отображать не будем
     
     print(not_correct_form)
@@ -214,7 +216,7 @@ def yurist():
         telefon_user=telefon_user,
         email_user=email_user,
         message_user=message_user,
-        restart_page_sended_success = send,
+        #restart_page_sended_success = send,
         block_form=block_form,
         not_correct_form=not_correct_form
         )

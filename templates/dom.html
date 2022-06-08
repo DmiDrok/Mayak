@@ -9,7 +9,10 @@
 		<div class="slider">
 			<!--  <input type="radio" name="slide" id="s1">
 			<input type="radio" name="slide" id="s2">
-			<input type="radio" name="slide" id="s3">    -->                  
+			<input type="radio" name="slide" id="s3">    -->   
+			               
+			<div id="slider_to_left" class="nav_main_slider"><div class="invisible_content"><i></i></div></div>
+			<div id="slider_to_right" class="nav_main_slider"><div class="invisible_content"><i></i></div></div>
 
 			<div class="slider_line">
 				<section class="slider_element first_slide">
@@ -125,6 +128,10 @@
 
 <div class="dom__wrapper_fourth">
 	<div class="container_dom">
+
+		<div id="dom_slider_left" class="dom_slider_nav"></div>
+		<div id="dom_slider_right" class="dom_slider_nav"></div>
+
 		<div class="container_dom_line">
 			<section class="dom_section_first">
 				<div class="block bl_1">
@@ -260,8 +267,8 @@
 
 				<p>
 					Автор статьи:
-					<a href="https://vk.com/uporotkaktus" target="_blank">
-						Анна Козлова
+					<a href="https://vk.com/fokinaalenapavlovna" target="_blank">
+						Алёна Фокина
 						<span class="invisible"></span>
 					</a>
 				</p>
@@ -290,34 +297,56 @@
 
 <script>
 	function domSlider(){
-		const 
-			sliderDom = document.querySelector(".container_dom");
-			lineDom = document.querySelector('.container_dom_line');
+		const sliderDom = document.querySelector(".container_dom");
+		const lineDom = document.querySelector('.container_dom_line');
 			
-		let leftOff = 0;
-			buttonDomNext = document.querySelector("#next_dom");
+		let leftOff = 0,
+			buttonDomNext = document.querySelector("#next_dom"),
 			buttonDomPrev = document.querySelector("#prev_dom");
 
-			buttonDomNext.addEventListener("click", function(){
-				leftOff = leftOff + document.querySelector(".container_dom_line section").offsetWidth;
+		let sliderDomLeft = document.querySelector("#dom_slider_left");
+		let sliderDomRight = document.querySelector("#dom_slider_right");
 
-				if(leftOff > document.querySelector(".container_dom_line section").offsetWidth*2){
-					leftOff = 0;
-				}
+		buttonDomNext.addEventListener("click", function(){
+			leftOff = leftOff + document.querySelector(".container_dom_line section").offsetWidth;
 
-				lineDom.style.left = -leftOff + "px";
-			})
+			if(leftOff > document.querySelector(".container_dom_line section").offsetWidth*2){
+				leftOff = 0;
+			}
 
-			buttonDomPrev.addEventListener("click", function(){
-				leftOff = leftOff - document.querySelector(".container_dom_line section").offsetWidth;
+			lineDom.style.left = -leftOff + "px";
+		})
 
-				if(leftOff < 0){
-					leftOff = document.querySelector(".container_dom_line section").offsetWidth*2;
-				}
+		buttonDomPrev.addEventListener("click", function(){
+			leftOff = leftOff - document.querySelector(".container_dom_line section").offsetWidth;
 
-				lineDom.style.left = -leftOff + "px";
-			})
-		}
+			if(leftOff < 0){
+				leftOff = document.querySelector(".container_dom_line section").offsetWidth*2;
+			}
+
+			lineDom.style.left = -leftOff + "px";
+		})
+
+		sliderDomLeft.addEventListener("touchstart", function(){
+			leftOff = leftOff - document.querySelector(".container_dom_line section").offsetWidth;
+
+			if(leftOff < 0){
+				leftOff = document.querySelector(".container_dom_line section").offsetWidth*2;
+			}
+
+			lineDom.style.left = -leftOff + "px";
+		})
+
+		sliderDomRight.addEventListener("touchstart", function(){
+			leftOff = leftOff + document.querySelector(".container_dom_line section").offsetWidth;
+
+			if(leftOff > document.querySelector(".container_dom_line section").offsetWidth*2){
+				leftOff = 0;
+			}
+
+			lineDom.style.left = -leftOff + "px";
+		})
+	}
 
 	domSlider()
 </script>
@@ -336,27 +365,4 @@
 			buttonNext.style.color = "";
 		})
 </script> 
-
-<!--Код для скрытия скролла-->
-<!--<script>
-	let content = document.querySelector(".main_content_big__scroll");
-
-	content.addEventListener("mouseover", function(){
-		document.body.style.overflowY = "hidden";
-	})
-
-	content.addEventListener("mouseout", function(){
-		document.body.style.overflowY = "scroll";
-	})
-</script>-->
-
-<!--<script>
-	function al(){
-		if(confirm("Подтвердить переход?")){
-			window.location.assign("https://www.google.ru/")
-		}
-	}
-
-	al()
-</script>-->
 {% endblock %}
