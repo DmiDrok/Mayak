@@ -402,3 +402,17 @@ try{
 catch(err){
 
 }
+
+//Отступы первого блока
+try{
+	console.log(window.screen.width);
+	if (window.screen.width <= 1024){
+		const header = document.querySelector("header");
+		const firstWrapper = document.querySelector(".wrapper_first");
+
+		firstWrapper.style.marginTop = header.clientHeight + "px";
+	}
+}
+catch(err){
+
+}

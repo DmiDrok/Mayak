@@ -385,9 +385,9 @@ nav{
 .nav_main_slider{
 	z-index: 1;
 	/*background-color: #fff;*/
-	height: 75%;
+	height: 100%;
 	width: 50%;
-	top: 10%;
+	/*top: 10%;*/
 	opacity: 0;
 	position: absolute;
 	/*overflow-x: scroll;*/
@@ -1501,6 +1501,8 @@ footer{
 	margin-top: 10px;
 	position: relative;
 	font-family: 'Raleway', 'Tahoma';
+	display: flex;
+	align-items: center;
 }
 #text_block__dom .header_text_block a{
 	position: relative;
@@ -2351,10 +2353,13 @@ footer{
 }
 
 .titles_prices_services ul li{
-	font-size: 17px;
 	font-weight: 500;
 	position: relative;
 	display: grid;
+}
+
+.titles_prices_services ul li p{
+	font-size: 17px;
 }
 
 .titles_prices_services ul li::before{
@@ -3096,7 +3101,7 @@ footer{
 		min-height: 770px;
 	}
 	.wrapper_first .slider{
-		height: 400px;
+		height: 450px;
 	}
 	.wrapper_first .slider section{
 		grid-template-rows: 44px;
@@ -3117,6 +3122,11 @@ footer{
 	.slider_navigation label{
 		width: 25px;
 		height: 25px;
+	}
+	.button_sub_text a{
+		font-size: 33px;
+		margin-top: 30px;
+		border-width: 4px;
 	}
 	/***Адаптация второго блока***/
 	.wrapper_second .text_block_wrapper_second h2{
@@ -3251,17 +3261,24 @@ footer{
 	}
 	/*Адаптация ПопАпа*/
 	#popup .content_popup h3{
-		font-size: 33px;
+		font-size: 38px;
 	}
 	#popup .content_popup p{
-		font-size: 30px;
+		font-size: 35px;
+	}
+	#popup .content_popup p::first-letter{
+		font-size: 40px;
 	}
 	.content_popup{
 		grid-template-rows: 35px auto;
 		/*max-height: 365px;*/
+		width: 70%;
 	}
 	#close{
-		font-size: 30px;
+		font-size: 35px;
+	}
+	.content_popup button a{
+		font-size: 35px;
 	}
 
 
@@ -3319,7 +3336,7 @@ footer{
 	.container_message p{
 		font-size: 32px;
 	}
-	.container_message button a {
+	.container_message a {
 	    padding: 1rem 2rem;
 	    font-size: 30px;
 	}
@@ -3424,15 +3441,15 @@ footer{
 	}
 
 	.about_services h2{
-		font-size: 50px;
+		font-size: 35px;
 	}
 
 	.titles_prices_services li p{
-		font-size: 37px;
+		font-size: 26px;
 	}
 
 	.titles_prices_services ul li::before{
-		font-size: 37px;
+		font-size: 26px;
 		left: -25px;
 	}
 
@@ -3445,7 +3462,7 @@ footer{
 	}
 
 	.title_feedback h2{
-		font-size: 50px;
+		font-size: 35px;
 	}
 
 	.feedback_block .container .form_contact_here form{
@@ -3520,7 +3537,7 @@ footer{
 		font-size: 30px;
 	}
 	.button_psiholog_more span, .submit_psiho a{
-		font-size: 26px;
+		font-size: 30px;
 	}
 	.upper_popup{
 		top: 60px;
@@ -3582,6 +3599,12 @@ footer{
 	}
 	.block__what{
 		border-width: 4px;
+	}
+	#dom_big_block{
+		height: 650px;
+	}
+	.main_content_big__scroll{
+		height: 455px;
 	}
 	/*Блок ПопАпа с прокруткой*/
 	.content_dance_popup h2{
@@ -4068,6 +4091,7 @@ footer{
 	.container_message{
 		border-radius: 0;
 		width: 100%;
+		grid-row-gap: 45px;
 	}
 	.container_message h2{
 		font-size: 45px;
@@ -4075,7 +4099,7 @@ footer{
 	.container_message p{
 		font-size: 40px;
 	}
-	.container_message button a {
+	.container_message a {
 	    padding: 1rem 2rem;
 	    font-size: 35px;
 	}
@@ -4167,6 +4191,33 @@ footer{
 	}
 	.consultation p {
     	font-size: 37px;
+	}
+	.about_services h2{
+		font-size: 50px;
+	}
+	.titles_prices_services ul li p{
+		font-size: 37px;
+	}
+	.titles_prices_services ul li::before{
+		font-size: 37px;
+	}
+	.title_feedback h2{
+		font-size: 50px;
+	}
+	.feedback_block .container .form_contact_here form label{
+		font-size: 42px;
+	}
+	.feedback_block .container .form_contact_here form label::first-letter{
+		font-size: 46px;
+	}
+	.feedback_block .container .form_contact_here form input:not(input[type="submit"]){
+		font-size: 40px;
+	}
+	.feedback_block .container .form_contact_here form textarea{
+		font-size: 40px;
+	}
+	.feedback_block .container .form_contact_here form{
+		grid-row-gap: 50px;
 	}
 
 	/*Адаптация ПопАпа*/
@@ -4614,7 +4665,7 @@ footer{
 	.container_message p{
 		font-size: 24px;
 	}
-	.container_message button a{
+	.container_message a{
 	    font-size: 25px;
 	}
 	#yurist_more__button button{
