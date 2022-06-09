@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import ContactSocio, ContactYurist
 
 
-from manage_mails.send import html_text
+#from manage_mails.send import html_text
 
 
 import sqlite3
@@ -53,20 +53,21 @@ links = {
 
 ##Для того, чтобы сделать ссылку активной и пользователь по навигации мог понять где он находится
 def reset_all_save_one(save_one: str) -> None:
-    global links
+    print(g.links)
+    if hasattr(g, "links"):
+        if save_one != None:
+            for key in g.links:
+                g.links[key] = ""
 
-    if save_one != None:
-        for key in links:
-            links[key] = ""
-
-        links[save_one] = "active_link"
-    else:
-        for key in links:
-            links[key] = ""
+            g.links[save_one] = "active_link"
+        else:
+            for key in g.links:
+                g.links[key] = ""
 
 ##Проверка на администратора
 def is_admin() -> bool:
     return True if session.get("admin", False) == True else False
+
 
 admin = False
 data = None
@@ -75,6 +76,14 @@ def before_request():
     """До первого запроса будем устанавливать время жизни сессии. По умолчанию - 1 час"""
     session.permanent = True
     app.permanent_session_lifetime = 60*60
+
+    if not hasattr(g, "links"):
+        g.links = {
+            "index": "",
+            "gym": "",
+            "school_dance": "",
+            "dom": "",
+        }
 
 ##Обработчик главной страницы
 @app.route("/main")
@@ -88,19 +97,19 @@ def index():
 @app.route("/gym")
 def gym():
     reset_all_save_one("gym")
-    return render_template("gym.html", title="Тренажёрный зал", links=links, admin=admin)
+    return render_template("gym.html", title="Тренажёрный зал", links=g.links, admin=admin)
 
 ##Обработчик страницы Школы Танца
 @app.route("/school_dance")
 def school_dance():
     reset_all_save_one("school_dance")
-    return render_template("school_dance.html", title="Школа Танца", links=links, admin=admin)
+    return render_template("school_dance.html", title="Школа Танца", links=g.links, admin=admin)
 
 ##Обработчик страницы МООМ ДОМА
 @app.route("/moom_dom")
 def dom():
     reset_all_save_one("dom")
-    return render_template("dom.html", title="МООМ ДОМ", links=links, admin=admin)
+    return render_template("dom.html", title="МООМ ДОМ", links=g.links, admin=admin)
 
 ##Обработчик страницы психологов
 @app.route("/socio_psych", methods=["POST", "GET"])
@@ -150,7 +159,7 @@ def socio_psych():
     return render_template(
         "socio_psych.html",
         title="Социально-психологическая помощь",
-        links=links, admin=admin,
+        links=g.links, admin=admin,
         form=form,
         telefon_user=telefon_user,
         email_user=email_user,
@@ -210,7 +219,7 @@ def yurist():
     return render_template(
         "yurist.html",
         title="Юридическая помощь", 
-        links=links, 
+        links=g.links, 
         admin=admin, 
         form=form,
         telefon_user=telefon_user,
@@ -221,21 +230,17 @@ def yurist():
         not_correct_form=not_correct_form
         )
 
-@app.route("/send_mail_socio_psych")
-def send_mail_socio_psych():
-    return render_template("send_mail.html")
-
 ##Обработчик страницы с отзывами о юристах
 @app.route("/yurist/feedback")
 def yurist_feedback():
     reset_all_save_one(None)
-    return render_template("yurist_feedback.html", title="Юридическая помощь (отзывы)", links=links, admin=admin)
+    return render_template("yurist_feedback.html", title="Юридическая помощь (отзывы)", links=g.links, admin=admin)
 
 ##Обработчик страницы с командой юристов
 @app.route("/yurist/team")
 def yurist_team():
     reset_all_save_one(None)
-    return render_template("yurist_team.html", title="Команда юристов", links=links, admin=admin)
+    return render_template("yurist_team.html", title="Команда юристов", links=g.links, admin=admin)
 
 ##Обработчик отображения страницы с постами
 @app.route("/all_posts")
@@ -248,7 +253,7 @@ def all_posts():
     if len(all_posts) < 0:
         all_posts = None
 
-    return render_template("all_posts.html", links=links, posts=all_posts, admin=admin)
+    return render_template("all_posts.html", links=g.links, posts=all_posts, admin=admin)
 
 ##Обработчик отображения одного из постов
 @app.route("/post/<post_id>")

@@ -30,11 +30,9 @@
 					</div>
 
 					<div class="button_sub_text">
-						<button>
-							<a href="https://vk.com/dance_shagi" target="_blank" title="Сообщество ВКонтакте">
-								Наше сообщество ВК
-							</a>
-						</button>					
+						<a href="https://vk.com/dance_shagi" target="_blank" title="Сообщество ВКонтакте">
+							Наше сообщество ВК
+						</a>			
 					</div>
 				</section>
 
@@ -73,7 +71,7 @@
 	<div class="container">
 		<div class="block">
 			<div class="under_text">
-				<a href="https://vk.com/id10474917" title="ВКонтакте" target="_blank">Ирина Гамаскова</a>
+				<a href="https://vk.com/id10474917" title="Страница ВКонтакте" target="_blank">Ирина Гамаскова</a>
 				<br>
 				<strong>
 					Учитель
@@ -84,7 +82,7 @@
 
 		<div class="block">
 			<div class="under_text">
-				<a href="https://vk.com/id104290991" title="ВКонтакте" target="_blank">Валерий Койнак</a>
+				<a href="https://vk.com/id104290991" title="Страница ВКонтакте" target="_blank">Валерий Койнак</a>
 				<br>
 				<strong>
 					Основатель
@@ -95,7 +93,7 @@
 		
 		<div class="block">
 			<div class="under_text">
-				<a href="https://vk.com/elizavetaivanovaimpulse" title="ВКонтакте" target="_blank">Елизавета Иванова</a>
+				<a href="https://vk.com/elizavetaivanovaimpulse" title="Страница ВКонтакте" target="_blank">Елизавета Иванова</a>
 				<br>
 				<strong>
 					Учитель
@@ -418,123 +416,75 @@ sliderFect()
 </script>
 
 <script>
-	function popDanceFunc(){
+function popDanceFunc(){
 	const dancePop = document.querySelectorAll(".dance_popup");
-		popWaltz = document.querySelector(".pop_waltz");
-		popSalza = document.querySelector(".pop_salza");
-		popTango = document.querySelector(".pop_tango");
-		popYoga = document.querySelector(".pop_yoga");
+	const popWaltz = document.querySelector(".pop_waltz");
+	const popSalza = document.querySelector(".pop_salza");
+	const popTango = document.querySelector(".pop_tango");
+	const popYoga = document.querySelector(".pop_yoga");
 
-	let	closeDance = document.querySelector(".dance_close")
-		closeWaltz = document.querySelector(".waltz_close");
-		closeSalza = document.querySelector(".salza_close")
-		closeTango = document.querySelector(".tango_close")
-		closeYoga = document.querySelector(".yoga_close")
+	let	closeDance = document.querySelector(".dance_close"),
+		closeWaltz = document.querySelector(".waltz_close"),
+		closeSalza = document.querySelector(".salza_close"),
+		closeTango = document.querySelector(".tango_close"),
+		closeYoga = document.querySelector(".yoga_close");
 
-	let buttonPop = document.querySelectorAll(".dance_pop");
-		buttonWaltz = document.querySelector(".waltz");
-		buttonSalza = document.querySelector(".salza");
-		buttonTango = document.querySelector(".tango");
+	let buttonPop = document.querySelectorAll(".dance_pop"),
+		buttonWaltz = document.querySelector(".waltz"),
+		buttonSalza = document.querySelector(".salza"),
+		buttonTango = document.querySelector(".tango"),
 		buttonYoga = document.querySelector(".yoga");
 
-		//Общее
-		//Вальс
-		buttonWaltz.addEventListener("click", function(){
-			popWaltz.style.position = "fixed";
-			popWaltz.style.top = "0";
+	let pops = {
+		"Waltz": [buttonWaltz, popWaltz, closeWaltz],
+		"Salza": [buttonSalza, popSalza, closeSalza],
+		"Tango": [buttonTango, popTango, closeTango],
+		"Yoga": [buttonYoga, popYoga, closeYoga]
+	};
 
-			document.body.style.overflowY = "hidden";
+	//Функция которая покажет попап
+	function showPopup(popup){
+		popup.style.zIndex = "100000";
+		popup.style.position = "fixed";
+		popup.style.top = "0";
+		popup.style.opacity = "1";
+
+		document.body.style.overflowY = "hidden";
+	}
+
+	//Функция которая закроет попап
+	function closePopup(popup){
+		popup.style.opacity = "0";
+		popup.style.position = "";
+		popup.style.top = "";
+		popup.style.zIndex = "-100";
+
+		document.body.style.overflowY = "scroll";
+	}
+
+	for (let btn in pops){
+		let showBtn = pops[btn][0];
+		let popup = pops[btn][1];
+		let closeBtn = pops[btn][2];
+
+		showBtn.addEventListener("click", function(){
+			showPopup(popup);
 		})
 
-		closeWaltz.addEventListener("click", function(){
-			popWaltz.style.position = "";
-			popWaltz.style.top = "";
-
-			document.body.style.overflowY = "scroll";
-		})
-
-		window.addEventListener("click", function(event){
-			if(popWaltz.style.position = "fixed" && event.target == popWaltz){
-				popWaltz.style.position = "";
-				popWaltz.style.top = "";
-
-				document.body.style.overflowY = "scroll";
-			}
-		})
-		//Сальса
-		buttonSalza.addEventListener("click", function(){
-			popSalza.style.position = "fixed";
-			popSalza.style.top = "0";
-
-			document.body.style.overflow = "hidden";
-		})
-
-		closeSalza.addEventListener("click", function(){
-			popSalza.style.position = "";
-			popSalza.style.top = "";
-
-			document.body.style.overflowY = "scroll";
-		})
-
-		window.addEventListener("click", function(event){
-			if(popSalza && event.target == popSalza){
-				popSalza.style.position = "";
-				popSalza.style.top = "";
-
-				document.body.style.overflowY = "scroll";
-			}
-		})
-		//Танго
-		buttonTango.addEventListener("click", function(){
-			popTango.style.position = "fixed";
-			popTango.style.top = "0";
-
-			document.body.style.overflowY = "hidden";
-		})
-
-		closeTango.addEventListener("click", function(){
-			popTango.style.position = "";
-			popTango.style.top = "";
-
-			document.body.style.overflowY = "scroll";
+		closeBtn.addEventListener("click", function(){
+			closePopup(popup);
 		})
 
 		window.addEventListener("click", function(event){
-			if(popTango && event.target == popTango){
-				popTango.style.position = "";
-				popTango.style.top = "";
-
-				document.body.style.overflowY = "scroll";
+			if(popup.style.position == "fixed" && event.target == popup){
+				closePopup(popup);
 			}
 		})
-		//Йога
-		buttonYoga.addEventListener("click", function(){
-			popYoga.style.position = "fixed";
-			popYoga.style.top = "0";
 
-			document.body.style.overflow = "hidden";
-		})
-
-		closeYoga.addEventListener("click", function(){
-			popYoga.style.position = "";
-			popYoga.style.top = "";
-
-			document.body.style.overflowY = "scroll";
-		})
-
-		window.addEventListener("click", function(event){
-			if(popYoga && event.target == popYoga){
-				popYoga.style.position = "";
-				popYoga.style.top = "";
-
-				document.body.style.overflowY = "scroll";
-			}
-		})
+	}
 }
-try{
-	popDanceFunc();
-}catch(err){
-	
-}
+
+popDanceFunc();
+
 </script>
 {% endblock %}

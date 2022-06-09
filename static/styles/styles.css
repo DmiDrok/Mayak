@@ -7,6 +7,17 @@ font-family: 'Raleway', sans-serif;
 font-family: 'Train One', cursive;
 font-family: 'Pangolin', cursive;
 */
+
+@keyframes show-wrapp{
+	0%{
+		opacity: 0;
+	}
+
+	100%{
+		opacity: 1;
+	}
+}
+
 *{
 	margin: 0;
 	padding: 0;
@@ -15,7 +26,7 @@ font-family: 'Pangolin', cursive;
 	box-sizing: border-box;
 }
 *::selection{
-    background-color: #30e9fa;
+    background-color: #b3b6f9;
     color: #fff;
 }
 html, body{
@@ -32,6 +43,7 @@ body{
 	background: #f5f7fb;
 	color: #455;
 	overflow-x: hidden;
+	max-width: 2100px;
 }
 /*body::-webkit-scrollbar {
  	width: 10px;
@@ -172,8 +184,8 @@ header{
 	list-style: none;
 	width: 250px;
 	cursor: default;
-	border-top: 2px solid #f5f7fb;
 	z-index: 10000;
+	border-top: 5px solid #f5f7fb;
 }
 .social_el{	
 	transition: .3s;
@@ -288,6 +300,9 @@ nav{
 	min-height: 700px;
 	background: #fff;
 	background-size: cover;
+	animation-name: show-wrapp;
+	animation-duration: 1s;
+	animation-timing-function: ease-in;
 }
 .wrapper_first .center_block .slider .slider_line h1{
 	position: relative;
@@ -319,8 +334,8 @@ nav{
 	display: grid;
 	position: absolute;
 	left: 50%;
-	top: 40%;
-	transform: translate(-50%);
+	top: 50%;
+	transform: translate(-50%, -50%);
 	color: #fff;
 	z-index: 101;
 	cursor: default;
@@ -369,13 +384,13 @@ nav{
 
 .nav_main_slider{
 	z-index: 1;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	height: 75%;
 	width: 50%;
 	top: 10%;
 	opacity: 0;
 	position: absolute;
-	overflow-x: scroll;
+	/*overflow-x: scroll;*/
 }
 
 .nav_main_slider .invisible_content{
@@ -398,23 +413,64 @@ nav{
 .button_sub_text{
 	z-index: 20;
 }
-.button_sub_text button{
-	background: 0;
-	border: 2px solid #30ecf2;
-	cursor: pointer;
-	transition: .3s;
-}
-.button_sub_text button:hover{
-	border-color: #2e73c7;
-}
 .button_sub_text a{
 	font-family: 'Noto Sans', sans-serif;
 	font-size: 20px;
+	font-weight: 500;
 	color: #fff;
 	padding: 10px;
 	display: block;
 	width: 100%;
+	background: 0;
+	border: 2px solid #30ecf2;
+	cursor: pointer;
+	transition: .4s;
+	position: relative;
+	z-index: 1;
+	border-radius: 2px;
 }
+.button_sub_text a:hover{
+	border-color: #46c9f1;
+}
+.button_sub_text a:hover::before{
+	height: 100%;
+}
+.button_sub_text a::before{
+	content: "";
+	position: absolute;
+	background-color: #46c9f1;
+	width: 100%;
+	height: 0;
+	display: block;
+	bottom: 0;
+	left: 0;
+	z-index: -1;
+	transition-duration: .6s;
+}
+.button_sub_text a p{
+	position: relative;
+}
+/*.button_sub_text a p::after{
+	content: "";
+	background-color: #fff;
+	width: 100%;
+	height: 2px;
+	display: block;
+	position: absolute;
+	bottom: -100px;
+	left: 0;
+	opacity: 0;
+	border-radius: 1px;
+	transition-duration: .3s;
+	transition-timing-function: ease-out;
+	transition-property: bottom opacity;
+	animation-name: up_line;
+	animation-duration: .5s;
+}
+.button_sub_text a:hover p::after{
+	bottom: -2px;
+	opacity: 1;
+}*/
 .slider .slider_line{
 	display: flex;
 	position: relative;
@@ -562,13 +618,13 @@ input[name="slide"]{
 
 .blue_slider_nav{
 	z-index: 1;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	height: 75%;
 	width: 50%;
 	top: 10%;
 	opacity: 0;
 	position: absolute;
-	overflow-x: scroll;
+	/*overflow-x: scroll;*/
 }
 
 #blue_slider_left{
@@ -688,6 +744,8 @@ input[name="slide"]{
 	background: #fff;
 	position: relative;
 	padding: 0 0 0 10px;
+	border-radius: 4px;
+	box-shadow: 0 0 8px 1px rgba(100, 100, 100, 0.2);
 }
 /**Часть кода, в которой раздаётся grid-area элементам(Позже будет использоваться в медиа-запросе)**/
 .wrapper_fourth .container .block:nth-child(1){
@@ -757,27 +815,23 @@ input[name="slide"]{
 	color: #000;
 	position: relative;
 }
-.wrapper_fourth .text_media button{
-	width: 150px;
-	border: 0;
-	background: #30ecf2;
-	border-radius: 5px;
-	transition-duration: .3s;
-	cursor: pointer;
-	
-}
-.wrapper_fourth .text_media button a{
+.wrapper_fourth .text_media a{
+	text-align: center;
 	padding: 10px;
 	width: 100%;
 	display: block;
-} 
-.wrapper_fourth .text_media button a{
+	width: 150px;
+	border: 0;
+	background: #30ecf2;
+	border-radius: 3px;
+	transition-duration: .3s;
+	cursor: pointer;
 	font-family: 'Raleway';
 	font-size: 20px;
-	font-weight: 500;
+	font-weight: 600;
 	color: #fff;
 }
-.wrapper_fourth .text_media button:hover{
+.wrapper_fourth .text_media a:hover{
 	background: #33beff;
 }
 .wrapper_fourth .other_block{
@@ -1283,6 +1337,10 @@ footer{
 }
 #buttons_dom_slider button:first-child{
 	border-right: 1px solid #bababa;
+	border-radius: 10px 0 0 10px;
+}
+#buttons_dom_slider button:last-child{
+	border-radius: 0 10px 10px 0;
 }
 #buttons_dom_slider button{
 	cursor: pointer;
@@ -1294,27 +1352,32 @@ footer{
 	font-size: 15px;
 	font-weight: 900;
 }
+#buttons_dom_slider button:active{
+	background-color: #bababa;
+	color: #fff;
+}
 .container_dom{
 	position: relative;
 	display: grid;
 	justify-items: center;
 	justify-self: center;
 	background: #fff;
-	box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.3);
+	/*box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.3);*/
+	box-shadow: 0 0 10px 1px rgba(100, 100, 100, 0.2);
 	width: 1170px;
 	height: 400px;
 	overflow: hidden;
-	border-radius: 2px;
+	border-radius: 4px;
 }
 .container_dom .dom_slider_nav{
 	z-index: 1;
-	background-color: #fff;
+	/*background-color: #fff;*/
 	height: 75%;
 	width: 50%;
 	top: 10%;
 	opacity: 0;
 	position: absolute;
-	overflow-x: scroll;
+	/*overflow-x: scroll;*/
 }
 #dom_slider_left{
 	left: 0;
@@ -1701,6 +1764,7 @@ footer{
 	display: grid;
 	height: 300px;
 	align-items: center;
+	transition-duration: .3s;
 }
 .block__what:hover{
 	background: #fff;
@@ -1746,13 +1810,16 @@ footer{
 .dance_popup{
 	display: grid;
 	top: -9999px;
+	z-index: -100;
 	transition-duration: 1s;
 	width: 100%;
 	height: 100%;
 	position: fixed;
 	background: rgba(0, 0, 0, 0.3);
-	z-index: 100000;
+	/*z-index: 100000;*/
 	transition: .3s;
+	opacity: 0;
+	transition-property: opacity;
 }
 .content_dance_popup{
 	display: grid;
@@ -1794,6 +1861,7 @@ footer{
 	grid-area: scroll_dance;
 	height: 350px;
 	overflow-y: scroll;
+	align-self: center;
 }
 .scroll_dance_pop_block p{
 	font-size: 16px;
@@ -1841,22 +1909,20 @@ footer{
 	font-size: 17px;
 	text-align: center;
 }
-.container_message button{
-	border: 0;
-	outline: 0;
-	background: #3dd1a0;
-	border-radius: 10px;
-}
-.container_message button:hover{
-	background: #41e0ab;
-}
-.container_message button a{
+.container_message a{
 	display: block;
 	height: 100%;
 	padding: 0.6rem 1rem;
 	font-size: 18px;
 	font-family: 'Noto Sans', 'sans-serif';
 	color: #fff;
+	border: 0;
+	outline: 0;
+	background: #3dd1a0;
+	border-radius: 2px;
+}
+.container_message a:hover{
+	background: #41e0ab;
 }
 /*Работа с четвёртым блоком юристов*/
 .yurist__wrapper_fourth{
@@ -2140,14 +2206,18 @@ footer{
 	grid-row-gap: 10px;
 	position: relative;
 	background: #fff;
-	box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+	/*box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);*/
+	box-shadow: 0 0 10px 3px rgba(100, 100, 100, 0.2);
 	padding: 0 2rem 1rem 2rem;
 	color: #78909c;
 	cursor: default;
-	border-radius: 7px;
+	border-radius: 3px;
+	opacity: 1;
+	transition-duration: .6s;
 }
 .psiholog__wrapper_third .container .block.hide{
 	display: none;
+	opacity: 0;
 }
 .symbol{
 	font-weight: 500;
@@ -3354,15 +3424,15 @@ footer{
 	}
 
 	.about_services h2{
-		font-size: 36px;
+		font-size: 50px;
 	}
 
 	.titles_prices_services li p{
-		font-size: 27px;
+		font-size: 37px;
 	}
 
 	.titles_prices_services ul li::before{
-		font-size: 27px;
+		font-size: 37px;
 		left: -25px;
 	}
 
@@ -3375,7 +3445,7 @@ footer{
 	}
 
 	.title_feedback h2{
-		font-size: 35px;
+		font-size: 50px;
 	}
 
 	.feedback_block .container .form_contact_here form{
@@ -3523,11 +3593,11 @@ footer{
 
 	/*Адаптация цен и формы*/
 	.feedback_block .container .form_contact_here form{
-		width: 80%;
+		width: 90%;
 	}
 
 	.feedback_block .container .form_contact_here form label{
-		font-size: 30px;
+		font-size: 37px;
 	}
 
 	.feedback_block .container .form_contact_here form label::first-letter{
@@ -3535,7 +3605,7 @@ footer{
 	}
 
 	.feedback_block .container .form_contact_here form input:not(input[type="submit"]) {
-		font-size: 30px;
+		font-size: 37px;
 	}
 
 	.feedback_block .container .form_contact_here form textarea{
@@ -3544,7 +3614,10 @@ footer{
 
 	.feedback_block .container .form_contact_here form input[type="submit"] {
 		margin-top: 2rem;
-		font-size: 30px;
+		font-size: 40px;
+		padding: 1rem 1.5rem;
+		width: 90%;
+		justify-self: center;
 	}
 }
 /*Адаптация для телефонов*/
@@ -4131,13 +4204,13 @@ footer{
 		height: 115px;
 	}
 	header .telefon{
-		font-size: 25px;
+		font-size: 22px;
 	}
 	.telefon:before{
 		left: -30px;
 	}
 	.nav_link{
-		font-size: 25px;
+		font-size: 22px;
 	}
 	#dots_header{
 		width: 55px;
@@ -4152,16 +4225,17 @@ footer{
 	}
 	#menu_social{
 		width: 320px;
-		top: 16px;
+		top: 14px;
+		border-top: 5px solid #f5f7fb;
 	}
 	.social_link{
-		font-size: 25px;
+		font-size: 22px;
 	}
 	#services_menu{
 		width: 675px;
 	}
 	.services_link{
-		font-size: 25px;
+		font-size: 22px;
 	}
 	/*Адаптация слайдера*/
 	.slider{
@@ -4178,17 +4252,16 @@ footer{
 		height: 3px;
 	}
 	.wrapper_first .center_block .slider .slider_line h1{
-		font-size: 45px;
+		font-size: 40px;
 	}
 	.wrapper_first .center_block .slider .slider_line p{
-		font-size: 25px;
+		font-size: 22px;
 	}
-	.button_sub_text button{
-		border-width: 3px;
-	}
-	.button_sub_text button a{
+	.button_sub_text a{
 		padding: 10px;
-		font-size: 25px;
+		font-size: 22px;
+		border-width: 3px;
+		border-width: 3px;
 	}
 	.slider_navigation{
 		bottom: -100px;
@@ -4222,7 +4295,7 @@ footer{
 		width: 200px;
 	}
 	.info_block button a{
-		font-size: 30px;		
+		font-size: 24px;		
 	}
 	/*Адаптация третьего блока*/
 	.wrapper_third{
@@ -4250,11 +4323,11 @@ footer{
 		height: 210px;
 	}
 	.wrapper_fourth .container .block img{
-		width: 110px;
-		height: 110px;
+		width: 100px;
+		height: 100px;
 	}
 	.wrapper_fourth .container .block p{
-		font-size: 27px;
+		font-size: 22px;
 	}
 	/*Адаптация Медиа-Блоков*/
 	.wrapper_fourth .media_block{
@@ -4326,6 +4399,12 @@ footer{
 	#trenya_body .block_contain_text p{
 		font-size: 25px;
 	}
+	.text_block_container h3{
+		font-size: 26px;
+	}
+	.block_contain_text p{
+		font-size: 21px;
+	}
 	.raspisanie span{
 		font-size: 27px;
 	}
@@ -4343,6 +4422,7 @@ footer{
 		width: 200px;
     	height: 250px;
     	bottom: -60px;
+		right: -125px;
 	}
 	.wrapper_fourth .other_block .block .zerkalo{
 		bottom: -80px;
@@ -4378,25 +4458,40 @@ footer{
 		width: 1300px;
 	}
 	.dance__wrapper_fourth .container .head_about h2{
-		font-size: 35px;
+		font-size: 30px;
 	}
 	.dance__wrapper_fourth .container .head_about p{
-		font-size: 25px;
+		font-size: 21px;
 	}
 	.history_story h2{
-		font-size: 35px;
+		font-size: 30px;
 	}
 	.history_story .story_block .line__story p {
-		font-size: 25px;
+		font-size: 21px;
 	}
 	.history_story .story_block .line__story p span{
 		font-size: 30px;
 	}
 	.history_story .block:nth-child(2) p{
-		font-size: 25px;
+		font-size: 21px;
 	}
 	.wrapper_third button{
 		font-size: 80px;
+	}
+	.center_text__what span{
+		font-size: 30px;
+	}
+	.center_text__what p{
+		font-size: 21px;
+	}
+	.scroll_dance_pop_block{
+		height: 450px;
+	}
+	.content_dance_popup h2{
+		font-size: 25px;
+	}
+	.scroll_dance_pop_block p{
+		font-size: 20px;
 	}
 
 
@@ -4405,10 +4500,10 @@ footer{
 		width: 1500px;
 	}
 	.container_info__all .text_info__all h3{
-		font-size: 45px;
+		font-size: 40px;
 	}
 	.container_info__all .text_info__all p{
-		font-size: 27px;
+		font-size: 22px;
 	}
 	.container_info__all{
 		min-height: 620px;

@@ -1,38 +1,43 @@
 //Функция для выпадающих списков
 function list(){
-	//Алгоритм для выпадающих списков
-	let menu = document.querySelector("#dots_header");
-		menuList = document.querySelector("#menu_social")
-		navLink = document.querySelector(".nav_element");
-		navServices = document.querySelector("#services_menu");
-		burgerBlock = document.querySelector("#burger_mobile");
-		burgerList = document.querySelector('.burger_list');
-	//Для трёхточечного меню
-	menu.addEventListener("mouseover", function(){
-		menuList.style.display = "block";
-	})
+	try{
+		//Алгоритм для выпадающих списков
+		let menu = document.querySelector("#dots_header");
+			menuList = document.querySelector("#menu_social")
+			navLink = document.querySelector(".nav_element");
+			navServices = document.querySelector("#services_menu");
+			burgerBlock = document.querySelector("#burger_mobile");
+			burgerList = document.querySelector('.burger_list');
+		//Для трёхточечного меню
+		menu.addEventListener("mouseover", function(){
+			menuList.style.display = "block";
+		})
 
-	menu.addEventListener("mouseout", function(){
-		menuList.style.display = "none";
-	})
+		menu.addEventListener("mouseout", function(){
+			menuList.style.display = "none";
+		})
 
-	//Для списка услуг
-	navLink.addEventListener("mouseover", function(){
-		navServices.style.display = "block";
-	})
+		//Для списка услуг
+		navLink.addEventListener("mouseover", function(){
+			navServices.style.display = "block";
+		})
 
-	navLink.addEventListener("mouseout", function(){
-		navServices.style.display = "none"
-	})
+		navLink.addEventListener("mouseout", function(){
+			navServices.style.display = "none"
+		})
 
-	//Для меню мобильных устройств
-	burgerBlock.addEventListener("mouseover", function(){
-		burgerList.style.display = "block";
-	})
+		//Для меню мобильных устройств
+		burgerBlock.addEventListener("mouseover", function(){
+			burgerList.style.display = "block";
+		})
 
-	burgerBlock.addEventListener("mouseout", function(){
-		burgerList.style.display = "none";
-	})
+		burgerBlock.addEventListener("mouseout", function(){
+			burgerList.style.display = "none";
+		})
+	}
+	catch(err){
+
+	}
 }
 
 list()
@@ -87,7 +92,7 @@ try{
 	}
 sliderFect()
 }catch(err){
-	console.warn("Слайдер третьего блока не обнаружен.")
+	//console.warn("Слайдер третьего блока не обнаружен.")
 }
 
 try{
@@ -180,7 +185,7 @@ function sliderScroll(){
 sliderScroll()
 // sliderAuto()
 }catch(err){
-	console.warn("Слайдер первого блока не обнаружен")
+	//console.warn("Слайдер первого блока не обнаружен")
 }
 /////Код ПопАпа
 const popupActive = document.querySelector(".telefon_children");
@@ -225,7 +230,7 @@ if(window.screen.width > 1024){
 			}
 		})
 	}catch(err){
-		console.warn("Блок с отзывами не обнаружен")
+		//console.warn("Блок с отзывами не обнаружен")
 	}
 }else{
 	try{
@@ -244,10 +249,10 @@ if(window.screen.width > 1024){
 			}
 		})
 	}catch(err){
-		console.warn("Блок с отзывами не обнаружен")
+		//console.warn("Блок с отзывами не обнаружен")
 	}
 }
-//Прогрузка блоков на странице психологической помощи
+//Прогрузка блоков с отзывами на странице психологической помощи
 function psihoLoad(){
 try{
 	if(window.screen.width > 420){
@@ -258,6 +263,7 @@ try{
 
 			for(let i = 0; i < 3 && i < blocksPsihologiya.length; i++){
 				blocksPsihologiya[i].classList.remove("hide");
+				
 			}
 
 			if(document.querySelectorAll(".hide").length == 0){
@@ -286,7 +292,7 @@ try{
 	})
 }
 }catch(err){
-	console.warn("Не психологическая помощь")
+	//console.warn("Не психологическая помощь")
 }
 }
 psihoLoad()
@@ -310,102 +316,89 @@ function popDanceFunc(){
 		buttonTango = document.querySelector(".tango"),
 		buttonYoga = document.querySelector(".yoga");
 
-		//Общее
-		//Вальс
-		buttonWaltz.addEventListener("click", function(){
-			popWaltz.style.position = "fixed";
-			popWaltz.style.top = "0";
+	let pops = {
+		buttonWaltz: [popWaltz, closeWaltz],
+		buttonSalza: [popSalza, closeSalza],
+		buttonTango: [popTango, closeTango],
+		buttonYoga: [popYoga, closeYoga]
+	};
 
-			document.body.style.overflowY = "hidden";
+	function closePopup(popup){
+		popup.style.opacity = "0";
+		popup.style.position = "";
+		popup.style.zIndex = "-100";
+		//popup.style.top = "";
+
+		document.body.style.overflowY = "scroll";
+	}
+
+	for (let btn in pops){
+		let popup = pops[btn][0];
+		let closeBtn = pops[btn][1];
+
+		btn.addEventListener("click", function(){
+			popup.style.position = "fixed";
+			popup.style.top = "0";
+			popup.style.opacity = "1";
+
+			document.body.style.ovefrlowY = "hidden";
 		})
 
-		closeWaltz.addEventListener("click", function(){
-			popWaltz.style.position = "";
-			popWaltz.style.top = "";
-
-			document.body.style.overflowY = "scroll";
-		})
-
-		window.addEventListener("click", function(event){
-			if(popWaltz.style.position = "fixed" && event.target == popWaltz){
-				popWaltz.style.position = "";
-				popWaltz.style.top = "";
-
-				document.body.style.overflowY = "scroll";
-			}
-		})
-		//Сальса
-		buttonSalza.addEventListener("click", function(){
-			popSalza.style.position = "fixed";
-			popSalza.style.top = "0";
-
-			document.body.style.overflow = "hidden";
-		})
-
-		closeSalza.addEventListener("click", function(){
-			popSalza.style.position = "";
-			popSalza.style.top = "";
-
-			document.body.style.overflowY = "scroll";
+		closeBtn.addEventListener("click", function(){
+			closePopup(popup);
 		})
 
 		window.addEventListener("click", function(event){
-			if(popSalza && event.target == popSalza){
-				popSalza.style.position = "";
-				popSalza.style.top = "";
-
-				document.body.style.overflowY = "scroll";
+			if(popup.style.position == "fixed" && event.target == popup){
+				closePopup(popup);
 			}
 		})
-		//Танго
-		buttonTango.addEventListener("click", function(){
-			popTango.style.position = "fixed";
-			popTango.style.top = "0";
 
-			document.body.style.overflowY = "hidden";
-		})
-
-		closeTango.addEventListener("click", function(){
-			popTango.style.position = "";
-			popTango.style.top = "";
-
-			document.body.style.overflowY = "scroll";
-		})
-
-		window.addEventListener("click", function(event){
-			if(popTango && event.target == popTango){
-				popTango.style.position = "";
-				popTango.style.top = "";
-
-				document.body.style.overflowY = "scroll";
-			}
-		})
-		//Йога
-		buttonYoga.addEventListener("click", function(){
-			popYoga.style.position = "fixed";
-			popYoga.style.top = "0";
-
-			document.body.style.overflow = "hidden";
-		})
-
-		closeYoga.addEventListener("click", function(){
-			popYoga.style.position = "";
-			popYoga.style.top = "";
-
-			document.body.style.overflowY = "scroll";
-		})
-
-		window.addEventListener("click", function(event){
-			if(popYoga && event.target == popYoga){
-				popYoga.style.position = "";
-				popYoga.style.top = "";
-
-				document.body.style.overflowY = "scroll";
-			}
-		})
+	}
 }
 try{
 	popDanceFunc();
 }catch(err){
 	
+}
+
+//Определяем устройство пользователя
+try{
+	let reg =  /(iPhone|Android|iPad|RIM)/;
+
+	if (!navigator.userAgent.match(reg)){
+		let slideBlockIndex1 = document.querySelector("#slider_to_left");
+		let sliderBlockIndex2 = document.querySelector("#slider_to_right");
+
+		let sliderBlockDom1 = document.querySelector("#dom_slider_left");
+		let sliderBlockDom2 = document.querySelector("#dom_slider_right");
+
+		slideBlockIndex1.style.display = "none";
+		sliderBlockIndex2.style.display = "none";
+
+		sliderBlockDom1.style.display = "none";
+		sliderBlockDom2.style.display = "none";
+	}
+}
+catch(err){
+
+}
+
+//Плавная прокрутка к форме
+try{
+	const anchors = document.querySelectorAll("a[href='#scroll_here_feedback']");
+
+	for (let anchor of anchors){
+		anchor.addEventListener("click", function(event){
+			event.preventDefault();
+			const blockFeedback = anchor.getAttribute("href");
+			document.querySelector("" + blockFeedback).scrollIntoView({
+				behavior: "smooth",
+				block: "start"
+			});
+		});
+	}
+}
+catch(err){
+
 }
