@@ -424,6 +424,8 @@ catch(err){
 
 //Слайдер с отзывами на странице юристов
 try{
+	const accessSize = window.screen.width > 420 ? true : false;
+	
 	const leftBtn = document.querySelector("#left_reviews_btn");
 	const rightBtn = document.querySelector("#right_reviews_btn");
 	const slider = document.querySelector(".slider_reviews");
@@ -437,17 +439,17 @@ try{
 	let leftOff = 0;
 	let move = sliderBlocks[0].clientWidth;
 
-
 	sliderLine.style.width = sliderBlocks[0].clientWidth * sliderBlocks.length + "px";
 	console.log(sliderBlocks[0].clientWidth);
 	navBtns[0].classList.add("active");
 	//sliderNav.style.bottom = slider.clientHeight - sliderTexts[0].clientHeight - 200 + "px";
 	controlMargin(0);
 
-
 	function controlMargin(number){
-		console.log(document.querySelector(".review").style.padding);
-		sliderNav.style.bottom = slider.clientHeight - sliderTexts[number].clientHeight - 200 + "px";
+		if (accessSize){
+			console.log(document.querySelector(".review").style.padding);
+			sliderNav.style.bottom = slider.clientHeight - sliderTexts[number].clientHeight - 200 + "px";
+		}
 	}
 
 	function controlInds(){
