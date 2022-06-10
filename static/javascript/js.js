@@ -253,7 +253,6 @@ if(window.screen.width > 1024){
 	}
 }
 //Прогрузка блоков с отзывами на странице психологической помощи
-function psihoLoad(){
 try{
 	if(window.screen.width > 420){
 		let buttonDisplay = document.querySelector(".more");
@@ -270,34 +269,35 @@ try{
 				buttonDisplay.style.display = "none";
 			}
 		})
-}else if(window.screen.width <= 420){
-	let blocksPsiho = document.querySelectorAll(".psiholog__wrapper_third .container .block");
-
-	for(let el = 2; el < 3 && el < blocksPsiho.length; el++ ){
-		blocksPsiho[el].classList.add("hide");
 	}
+	else if(window.screen.width <= 420){
+		let blocksPsiho = document.querySelectorAll(".psiholog__wrapper_third .container .block");
 
-	let buttonDisplay = document.querySelector(".more");
-
-	buttonDisplay.addEventListener("click", function(){
-		let blocksPsihologiya = document.querySelectorAll(".hide");
-
-		for(let i = 0; i < 2 && i < blocksPsihologiya.length; i++){
-			blocksPsihologiya[i].classList.remove("hide");
+		for(let el = 2; el < 3 && el < blocksPsiho.length; el++ ){
+			blocksPsiho[el].classList.add("hide");
 		}
 
-		if(document.querySelectorAll(".hide").length == 0){
-			buttonDisplay.style.display = "none";
-		}
-	})
-}
+		let buttonDisplay = document.querySelector(".more");
+
+		buttonDisplay.addEventListener("click", function(){
+			let blocksPsihologiya = document.querySelectorAll(".hide");
+
+			for(let i = 0; i < 2 && i < blocksPsihologiya.length; i++){
+				blocksPsihologiya[i].classList.remove("hide");
+			}
+
+			if(document.querySelectorAll(".hide").length == 0){
+				buttonDisplay.style.display = "none";
+			}
+		})
+	}
 }catch(err){
 	//console.warn("Не психологическая помощь")
 }
-}
-psihoLoad()
+
+
 //Попапы на странице Школы Танцев
-function popDanceFunc(){
+try{
 	const dancePop = document.querySelectorAll(".dance_popup");
 	const popWaltz = document.querySelector(".pop_waltz");
 	const popSalza = document.querySelector(".pop_salza");
@@ -317,31 +317,39 @@ function popDanceFunc(){
 		buttonYoga = document.querySelector(".yoga");
 
 	let pops = {
-		buttonWaltz: [popWaltz, closeWaltz],
-		buttonSalza: [popSalza, closeSalza],
-		buttonTango: [popTango, closeTango],
-		buttonYoga: [popYoga, closeYoga]
+		"Waltz": [buttonWaltz, popWaltz, closeWaltz],
+		"Salza": [buttonSalza, popSalza, closeSalza],
+		"Tango": [buttonTango, popTango, closeTango],
+		"Yoga": [buttonYoga, popYoga, closeYoga]
 	};
 
+	//Функция которая покажет попап
+	function showPopup(popup){
+		popup.style.zIndex = "100000";
+		popup.style.position = "fixed";
+		popup.style.top = "0";
+		popup.style.opacity = "1";
+
+		document.body.style.overflowY = "hidden";
+	}
+
+	//Функция которая закроет попап
 	function closePopup(popup){
 		popup.style.opacity = "0";
 		popup.style.position = "";
+		popup.style.top = "";
 		popup.style.zIndex = "-100";
-		//popup.style.top = "";
 
 		document.body.style.overflowY = "scroll";
 	}
 
 	for (let btn in pops){
-		let popup = pops[btn][0];
-		let closeBtn = pops[btn][1];
+		let showBtn = pops[btn][0];
+		let popup = pops[btn][1];
+		let closeBtn = pops[btn][2];
 
-		btn.addEventListener("click", function(){
-			popup.style.position = "fixed";
-			popup.style.top = "0";
-			popup.style.opacity = "1";
-
-			document.body.style.ovefrlowY = "hidden";
+		showBtn.addEventListener("click", function(){
+			showPopup(popup);
 		})
 
 		closeBtn.addEventListener("click", function(){
@@ -356,9 +364,7 @@ function popDanceFunc(){
 
 	}
 }
-try{
-	popDanceFunc();
-}catch(err){
+catch(err){
 	
 }
 

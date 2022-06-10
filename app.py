@@ -248,6 +248,13 @@ def yurist():
         not_correct_form=not_correct_form
         )
 
+@app.route("/get_avatar/<id>")
+def get_avatar(id):
+    res = make_response(YuristReviews.query.filter_by(id=id).first().avatar, 200)
+    res.headers["Content-Type"] = "image/jpg"
+
+    return res 
+
 ##Обработчик страницы с отзывами о юристах
 @app.route("/yurist/feedback")
 def yurist_feedback():

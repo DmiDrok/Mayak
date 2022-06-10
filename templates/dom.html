@@ -419,21 +419,11 @@
 		})
 	}
 
-	domSlider()
+	try{
+		domSlider()
+	}
+	catch(err){
+		
+	}
 </script>
-
-<script>
-	let buttonNext = document.querySelector("#next_dom");
-		buttonPrev = document.querySelector("#prev_dom");
-
-		buttonNext.addEventListener("click", function(){
-			buttonNext.style.color = "#bababa";
-			buttonPrev.style.color = "";
-		})
-
-		buttonPrev.addEventListener("click", function(){
-			buttonPrev.style.color = "#bababa";
-			buttonNext.style.color = "";
-		})
-</script> 
 {% endblock %}
