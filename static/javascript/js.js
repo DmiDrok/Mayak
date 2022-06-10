@@ -405,7 +405,6 @@ catch(err){
 
 //Отступы первого блока
 try{
-	console.log(window.screen.width);
 	if (window.screen.width <= 1024){
 		const header = document.querySelector("header");
 		const firstWrapper = document.querySelector(".wrapper_first");
@@ -415,4 +414,84 @@ try{
 }
 catch(err){
 
+}
+
+//Слайдер с отзывами на странице юристов
+try{
+	const leftBtn = document.querySelector("#left_reviews_btn");
+	const rightBtn = document.querySelector("#right_reviews_btn");
+	const slider = document.querySelector(".slider_reviews");
+	const sliderLine = document.querySelector(".line_reviews");
+	const sliderBlocks = document.querySelectorAll(".line_reviews > .review");
+	const sliderNav = document.querySelector("#nav_reviews");
+	const sliderTexts = document.querySelectorAll(".line_reviews > .review > .text_review");
+
+	let navBtns = document.querySelectorAll(".nav_rev");
+
+	let leftOff = 0;
+	let move = sliderBlocks[0].clientWidth;
+
+
+	sliderLine.style.width = sliderBlocks[0].clientWidth * sliderBlocks.length + "px";
+	console.log(sliderBlocks[0].clientWidth);
+	navBtns[0].classList.add("active");
+	//sliderNav.style.bottom = slider.clientHeight - sliderTexts[0].clientHeight - 200 + "px";
+	controlMargin(0);
+
+
+	function controlMargin(number){
+		console.log(document.querySelector(".review").style.padding);
+		sliderNav.style.bottom = slider.clientHeight - sliderTexts[number].clientHeight - 200 + "px";
+	}
+
+	function controlInds(){
+
+		for (let i=0; i<navBtns.length; i++){
+			if (leftOff == -move*i){
+				saveOne(navBtns[i]);
+				controlMargin(i);
+			}
+		}
+
+	}
+
+	function saveOne(save){
+		for (let btn of navBtns){
+			btn.classList.remove("active");
+		}
+		save.classList.add("active");
+	}
+
+	for (let i=0; i<navBtns.length; i++){
+		navBtns[i].addEventListener("click", function(){
+			leftOff = -move * i;
+
+			sliderLine.style.left = leftOff + "px";
+			controlInds();
+		})
+	}
+
+	leftBtn.addEventListener("click", function(){
+		leftOff += move;
+		if (leftOff > 0){
+			leftOff = -move * (sliderBlocks.length-1);
+		}
+
+		sliderLine.style.left = leftOff + "px";
+		controlInds();
+	})
+
+	rightBtn.addEventListener("click", function(){
+		leftOff += -move;
+		if (leftOff < -move * (sliderBlocks.length-1)){
+			leftOff = 0;
+		}
+
+		sliderLine.style.left = leftOff + "px";
+		controlInds();
+	})
+
+}
+catch(err){
+	console.error(err);
 }

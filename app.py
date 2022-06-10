@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for, session, redirect, g, make_response, current_app, request, flash, get_flashed_messages
 from flask_mail import  Mail, Message
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,28 +10,42 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from forms import ContactSocio, ContactYurist
 
 
-#from manage_mails.send import html_text
-
-
-import sqlite3
-import os
-import json
 import re
 import threading
+import os
 
 ##WSGI - приложение
 app = Flask(__name__, template_folder="templates", static_folder="static")
-#app.register_blueprint(admin, url_prefix="/admin") ##Регистрируем blueprint админки
+db = SQLAlchemy(app)
+migrate_manager = Migrate(app, db)
 
 ##Конфиг
-SECRET_KEY = "0ewaf0asdfjao90j32f03kfoasd,coamda-0e1=-efo=asdkcaskcoasdjf0329qgj=q20=0=rcvb,cvolmbolasamfoasdf-sadf-#$#$$)@_R)KIFJSDFJ9ojasdgj"
-CSRF_ENABLED = True
-app.config.from_object(__name__)
+app.config["SECRET_KEY"] = "0ewaf0asdfjao90j32f03kfoasd,coamda-0e1=-efo=asdkcaskcoasdjf0329qgj=q20=0=rcvb,cvolmbolasamfoasdf-sadf-#$#$$)@_R)KIFJSDFJ9ojasdgj"
+app.config["CSRF_ENABLED"] = True
 app.config["MAIL_SERVER"] = "smtp.mail.ru"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
 app.config["MAIL_USERNAME"] = "to-mayak@mail.ru"
 app.config["MAIL_PASSWORD"] = "L86PUUzBTY6NKxXybFs4"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Data.db"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["COMMIT_ON_TEARDOWN"] = True
+
+
+##Аватар по умолчанию
+def default_avatar():
+    with app.app_context():
+        with app.open_resource(os.path.join(app.root_path, "static", "img", "admin.png"), "rb") as file:
+            return file.read()
+
+##Отзывы юристов
+class YuristReviews(db.Model):
+    __tablename__ = "yurist_reviews"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text, nullable=False)
+    review = db.Column(db.Text, nullable=False)
+    avatar = db.Column(db.BLOB)
 
 
 mail = Mail(app) ##Объект для отправки сообщений
@@ -180,6 +196,7 @@ def yurist():
     message_user = ""
 
     not_correct_form = None
+    reviews = YuristReviews.query.all()
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -220,7 +237,8 @@ def yurist():
         "yurist.html",
         title="Юридическая помощь", 
         links=g.links, 
-        admin=admin, 
+        admin=admin,
+        reviews=reviews,
         form=form,
         telefon_user=telefon_user,
         email_user=email_user,
@@ -290,4 +308,4 @@ def page_not_found(error):
 
 ##Точка входа
 if __name__ == "__main__":
-    app.run(host="192.168.0.102", port=5000, debug=True)
+    app.run(host="localhost", port=5000, debug=True)

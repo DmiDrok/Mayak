@@ -1424,16 +1424,18 @@ footer{
 	height: 100%;
 	border-radius: 2px;
 }
-.container_dom section:nth-child(1) .block:first-child .text_block_dom{
+
+/*.container_dom section:nth-child(1) .block:first-child .text_block_dom{
 	bottom: -75px;
 }
 .container_dom section:nth-child(2) .block:last-child .text_block_dom{
 	bottom: -75px;
-}
+}*/
+
 .container_dom .block .text_block_dom{
 	font-size: 20px;
-	position: absolute;
-	bottom: -55px;
+	/*position: absolute;
+	bottom: -55px;*/
 }
 .container_dom .block .text_block_dom p{
 	position: relative;
@@ -1458,6 +1460,7 @@ footer{
 	background: #fff;
 	box-shadow: 1px 1px 30px rgba(0, 0, 0, 0.3);
 	position: relative;
+	border-radius: 2px;
 }
 #image_block_big__dom{
 	grid-area: big_image__dom;
@@ -1498,7 +1501,6 @@ footer{
 }
 #text_block__dom .header_text_block p{
 	grid-area: text_subHead;
-	margin-top: 10px;
 	position: relative;
 	font-family: 'Raleway', 'Tahoma';
 	display: flex;
@@ -1507,6 +1509,7 @@ footer{
 #text_block__dom .header_text_block a{
 	position: relative;
 	color: #0d6b66;
+	margin-left: 6px;
 }
 #text_block__dom .header_text_block p a .invisible{
 	opacity: 0;
@@ -1526,41 +1529,38 @@ footer{
 		width: 30px;
 		height: 30px;
 }*/
-#text_block__dom .header_text_block button{
+#text_block__dom .header_text_block a.to_vk:hover{
+	color: #141414;
+	border:2px solid #141414;
+}
+#text_block__dom .header_text_block a.to_vk{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #0d6b66;
+	font-weight: 500;
+	font-family: 'Raleway', 'Tahoma';
+	font-size: 17px;
+	text-transform: uppercase;
+	transition: .5s;
 	grid-area: button_headBtn;
 	cursor: pointer;
 	height: 40px;
 	width: 160px;
 	background: none;
-	border: 2px solid #858585;
+	border: 2px solid #0d6b66;
 	transition-duration: .3s;
 	position: relative;
-}
-#text_block__dom .header_text_block button:hover{
-	border:2px solid #141414;
-}
-#text_block__dom .header_text_block button:hover a{
-	color: #141414;
-}
-#text_block__dom .header_text_block button a{
-	color: #858585;
-	font-family: 'Raleway', 'Tahoma';
-	font-size: 17px;
-	text-transform: uppercase;
-	transition: .3s;
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	left: 0;
-	bottom: 0;
-	top: 25%;
 }
 /*Блок с прокруткой в МООМ ДОМ*/
 .main_content_big__scroll{
 	grid-area: scroll_block;
-	height: 270px;
+	height: 290px;
 	overflow: scroll;
 	overflow-x: hidden;
+}
+.main_content_big__scroll p{
+	text-indent: 20px;
 }
 .main_content_big__scroll::-webkit-scrollbar {
 	 background: transparent;
@@ -1938,7 +1938,137 @@ footer{
 #text_yurist_wrapper_fourth h2{
 	font-weight: 500;
 }
-/*Работа с отзывами*/
+/*Отзывы на странице юристов*/
+.yurist__wrapper_reviews{
+	margin: 2rem;
+	display: grid;
+}
+.yurist__wrapper_reviews .title_reviews{
+	text-align: center;
+}
+.yurist__wrapper_reviews .title_reviews h2{
+	font-size: 24px;
+}
+.yurist__wrapper_reviews .slider_reviews{
+	position: relative;
+	justify-self: center;
+}
+.yurist__wrapper_reviews .container_reviews{
+	width: 1024px;
+	margin-top: 2rem;
+	position: relative;
+	overflow: hidden;
+}
+.yurist__wrapper_reviews .container_reviews .line_reviews{
+	display: flex;
+	position: relative;
+	left: 0;
+	transition: .5s;
+}
+.yurist__wrapper_reviews .review{
+	display: grid;
+	grid-template-areas: 
+	"image_rev text_rev"
+	;
+	grid-column-gap: 4rem;
+	/*box-shadow: 0 0 10px 1px rgba(100, 100, 100, 0.2);
+	background-color: #fff;*/
+	border-radius: 3px;
+	padding: 2.5rem 4rem;
+	min-width: 1024px;
+
+}
+.yurist__wrapper_reviews .review .image_review{
+	grid-area: image_rev;
+	position: relative;
+	width: 150px;
+	height: 150px;;
+	align-self: center;
+}
+.yurist__wrapper_reviews .review .image_review img{
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	border-radius: 50%
+}
+.yurist__wrapper_reviews .review .text_review{
+	grid-area: text_rev;
+	position: relative;
+	height: fit-content;
+}
+.yurist__wrapper_reviews .review .text_review p{
+	font-size: 21px;
+}
+.yurist__wrapper_reviews .review .text_review span{
+	color: #5a5a5a;
+	display: block;
+	margin-top: 20px;
+	font-size: 16px;
+}
+.yurist__wrapper_reviews .slider_reviews .reviews_slider_btn{
+	padding: 10px;
+	border: 1px solid #909090;
+	color: #909090;
+	border-radius: 50%;
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	transition-duration: .4s;
+	font-size: 26px;
+	font-weight: 700;
+	position: absolute;
+	top: 50%;
+	transition-duration: .3s;
+}
+.yurist__wrapper_reviews .slider_reviews .reviews_slider_btn:hover{
+	background-color: #24c0a7;
+	color: #fff;
+	border: none;
+}
+.yurist__wrapper_reviews .slider_reviews .reviews_slider_btn:active{
+	background-color: #187464;
+}
+#left_reviews_btn{
+	left: -60px;
+}
+#right_reviews_btn{
+	right: -40px;
+}
+#nav_reviews{
+	position: absolute;
+	display: flex;
+	left: 50%;
+	margin-left: -116px;
+	transition-duration: .3s;
+}
+#nav_reviews .nav_rev{
+	display: block;
+	width: 17px;
+	height: 17px;
+	border-radius: 3px;
+	background-color: #909090;
+	cursor: pointer;
+	transition-duration: .5s;
+}
+#nav_reviews .nav_rev:hover{
+	transform: rotate(-180deg);
+}
+#nav_reviews .nav_rev:not(:first-child){
+	margin-left: 7px;
+}
+#nav_reviews .nav_rev.active{
+	background-color: #24c0a7;
+}
+#nav_reviews .nav_rev:active{
+	transition-duration: .1s;
+	background-color: #187464;
+}
+
+/*Работа с отзывами
 .feedback{
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
@@ -2018,7 +2148,7 @@ footer{
 	font-size: 20px;
 	font-family: 'Noto sans', 'sans-serif';
 	color: #3dd1a0;
-}
+}*/
 
 
 /**Разработка блока с отзывами**/
@@ -2319,7 +2449,9 @@ footer{
 /*Разработка пятого блока страницы психологов*/
 .wrapper_services{
 	display: grid;
-	padding: 5rem 2rem;
+	padding: 2rem;
+	margin-top: 5rem;
+	margin-bottom: 2rem;
 }
 
 .wrapper_services .container{
@@ -3444,12 +3576,12 @@ footer{
 		font-size: 35px;
 	}
 
-	.titles_prices_services li p{
-		font-size: 26px;
+	.titles_prices_services ul li p{
+		font-size: 27px;
 	}
 
 	.titles_prices_services ul li::before{
-		font-size: 26px;
+		font-size: 27px;
 		left: -25px;
 	}
 
@@ -3487,6 +3619,22 @@ footer{
 
 	.feedback_block .container .form_contact_here form input[type="submit"]{
 		font-size: 25px;
+	}
+
+	/*Адаптация блока с отзывами*/
+	.yurist__wrapper_reviews .title_reviews h2{
+		font-size: 35px;
+	}
+	.yurist__wrapper_reviews .review .text_review p{
+		font-size: 27px;
+	}
+	.yurist__wrapper_reviews .review .text_review span{
+		bottom: -40px;
+		font-size: 26px;
+	}
+	.yurist__wrapper_reviews .review .image_review{
+		width: 200px;
+		height: 200px;
 	}
 }
 @media(max-width: 735px){
@@ -3578,7 +3726,7 @@ footer{
 		font-size: 50px;
 	}
 	.container_info__all .text_info__all p{
-		font-size: 38px;
+		font-size: 34px;
 	}
 	/*Адаптация школы танцев*/
 	.text_sup__what h2{
@@ -3604,7 +3752,7 @@ footer{
 		height: 650px;
 	}
 	.main_content_big__scroll{
-		height: 455px;
+		height: 450px;
 	}
 	/*Блок ПопАпа с прокруткой*/
 	.content_dance_popup h2{
@@ -3620,27 +3768,42 @@ footer{
 	}
 
 	.feedback_block .container .form_contact_here form label{
-		font-size: 37px;
+		font-size: 27px;
 	}
 
 	.feedback_block .container .form_contact_here form label::first-letter{
-		font-size: 34px;
+		font-size: 24px;
 	}
 
 	.feedback_block .container .form_contact_here form input:not(input[type="submit"]) {
-		font-size: 37px;
+		font-size: 27px;
 	}
 
 	.feedback_block .container .form_contact_here form textarea{
-		font-size: 30px;
+		font-size: 27px;
 	}
 
 	.feedback_block .container .form_contact_here form input[type="submit"] {
 		margin-top: 2rem;
-		font-size: 40px;
+		font-size: 30px;
 		padding: 1rem 1.5rem;
 		width: 90%;
 		justify-self: center;
+	}
+
+	.yurist__wrapper_reviews .slider_reviews .reviews_slider_btn{
+		width: 80px;
+		height: 80px;
+		font-size: 40px;
+	}
+
+	#nav_reviews .nav_rev{
+		width: 22px;
+		height: 22px;
+	}
+
+	#nav_reviews .nav_rev:not(:first-child) {
+		margin-left: 17px;
 	}
 }
 /*Адаптация для телефонов*/
@@ -3983,13 +4146,13 @@ footer{
 		grid-template-rows: 100px auto;
 	}
 	#dom_big_block{
-		height: 600px;
+		height: 750px;
 	}
 	#text_block__dom{
 		grid-template-rows: auto;
 	}
 	.main_content_big__scroll p{
-		font-size: 40px;
+		font-size: 43px;
 		line-height: 40px;
 	}
 	.main_content_big__scroll br{
@@ -4074,10 +4237,10 @@ footer{
 	}
 	.content_dance_popup{
 		width: 95%;
-		min-height: 630px;
+		min-height: 750px;
 	}
 	.scroll_dance_pop_block{
-		height: 540px;
+		height: 600px;
 	}
 	.scroll_dance_pop_block::-webkit-scrollbar {
 		 width: 20px;
@@ -4218,6 +4381,25 @@ footer{
 	}
 	.feedback_block .container .form_contact_here form{
 		grid-row-gap: 50px;
+	}
+	.yurist__wrapper_reviews .title_reviews h2{
+		font-size: 50px;
+	}
+	.yurist__wrapper_reviews .review .text_review p{
+		font-size: 37px;
+	}
+	.yurist__wrapper_reviews .review .text_review span{
+		font-size: 35px;
+		position: static;
+		display: block;
+		margin-top: 40px;
+	}
+	.yurist__wrapper_reviews .review .image_review{
+		align-self: start;
+	}
+	.yurist__wrapper_reviews .review .image_review{
+		width: 300px;
+		height: 300px;
 	}
 
 	/*Адаптация ПопАпа*/
