@@ -8,7 +8,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 from forms import ContactSocio, ContactYurist
-from manage_mails.text import html_text
+
+
+from dotenv import load_dotenv
+
 
 import re
 import threading
@@ -18,6 +21,11 @@ import os
 app = Flask(__name__, template_folder="templates", static_folder="static")
 db = SQLAlchemy(app)
 migrate_manager = Migrate(app, db)
+
+##Загружаем переменные
+dotenv_path = os.path.join(app.root_path, ".env")
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
 
 ##Конфиг
 app.config["SECRET_KEY"] = "0ewaf0asdfjao90j32f03kfoasd,coamda-0e1=-efo=asdkcaskcoasdjf0329qgj=q20=0=rcvb,cvolmbolasamfoasdf-sadf-#$#$$)@_R)KIFJSDFJ9ojasdgj"
@@ -47,6 +55,7 @@ mail = Mail(app) ##Объект для отправки сообщений
 def send_mail(subj, telefon_user, email, content, *args, **kwargs):
     try:
         msg = Message(subject=subj, sender=app.config["MAIL_USERNAME"], recipients=["drobkov155099@gmail.com"])
+        #msg.html = html_text.replace("{{subject}}", subj).replace("{{telefon}}", telefon_user).replace("{{content}}", content).replace("{{email}}", email)
         
         with app.app_context():
             msg.html = render_template("needful/tmpl_to_email.html", subject=subj, telefon=telefon_user, content=content, email=email)
@@ -75,19 +84,14 @@ def reset_all_save_one(save_one: str) -> None:
             for key in g.links:
                 g.links[key] = ""
 
-##Проверка на администратора
-def is_admin() -> bool:
-    return True if session.get("admin", False) == True else False
-
-
-##Выполняется перед первым запросом
+##До первого запроса
 @app.before_first_request
 def before_first_request():
     """До первого запроса будем устанавливать время жизни сессии. По умолчанию - 1 минута"""
     session.permanent = True
     app.permanent_session_lifetime = 60
 
-##Выполняется перед каждым запросом
+
 @app.before_request
 def before_request():
     if not hasattr(g, "links"):
@@ -104,25 +108,25 @@ def before_request():
 @app.route("/")
 def index():
     reset_all_save_one(None)
-    return render_template("index.html", title="Главная", links=links, admin=admin)
+    return render_template("index.html", title="Главная", links=g.links,)
 
 ##Обработчик страницы тренажёрного зала
 @app.route("/gym")
 def gym():
     reset_all_save_one("gym")
-    return render_template("gym.html", title="Тренажёрный зал", links=g.links, admin=admin)
+    return render_template("gym.html", title="Тренажёрный зал", links=g.links)
 
 ##Обработчик страницы Школы Танца
 @app.route("/school_dance")
 def school_dance():
     reset_all_save_one("school_dance")
-    return render_template("school_dance.html", title="Школа Танца", links=g.links, admin=admin)
+    return render_template("school_dance.html", title="Школа Танца", links=g.links)
 
 ##Обработчик страницы МООМ ДОМА
 @app.route("/moom_dom")
 def dom():
     reset_all_save_one("dom")
-    return render_template("dom.html", title="МООМ ДОМ", links=g.links, admin=admin)
+    return render_template("dom.html", title="МООМ ДОМ", links=g.links)
 
 ##Обработчик страницы психологов
 @app.route("/socio_psych", methods=["POST", "GET"])
@@ -166,17 +170,17 @@ def socio_psych():
         else:
             not_correct_form = True
 
-    #send = request.args.get("send", None) if session.get("socio_psych_sended", None) is not None else False
-    block_form = session.get("socio_psych_sended", None) ##Если пользователь отправил форму - будет True и форму отображать не будем
+    ##Если пользователь отправил форму - отображать её не будем
+    block_form = session.get("socio_psych_sended", None)
 
     return render_template(
         "socio_psych.html",
         title="Социально-психологическая помощь",
+        links=g.links,
         form=form,
         telefon_user=telefon_user,
         email_user=email_user,
         message_user=message_user,
-        #restart_page_sended_success = send,
         block_form=block_form,
         not_correct_form=not_correct_form,
         )
@@ -225,8 +229,8 @@ def yurist():
             not_correct_form = True
 
 
-    #send = request.args.get("send") if session.get("yurist_sended", None) is not None else False
-    block_form = session.get("yurist_sended", None) ##Если пользователь отправил форму - будет True и форму отображать не будем
+    ##Если пользователь отправил форму - будет True и форму отображать не будем
+    block_form = session.get("yurist_sended", None)
     
     print(not_correct_form)
     return render_template(
@@ -238,9 +242,19 @@ def yurist():
         telefon_user=telefon_user,
         email_user=email_user,
         message_user=message_user,
-        #restart_page_sended_success = send,
         block_form=block_form,
         not_correct_form=not_correct_form
+        )
+
+##Обработчик контактов
+@app.route("/contacts")
+def contacts():
+    reset_all_save_one(None)
+
+    return render_template(
+        "contacts.html", 
+        title="Контакты", 
+        links=g.links
         )
 
 ##Получить аватар из БД по айди
@@ -250,12 +264,6 @@ def get_avatar(id):
     res.headers["Content-Type"] = "image/jpg"
 
     return res 
-
-##Сработает когда произойдёт уничтожение контекста приложения
-@app.teardown_appcontext
-def teardown(exception):
-    if hasattr(g, "conn"):
-        g.conn.close()
 
 ##Переход на несуществующую страницу
 @app.errorhandler(404)

@@ -860,6 +860,12 @@ input[name="slide"]{
 	;
 	grid-template-columns: 55% auto;
 }
+.wrapper_fourth .other_block .block:nth-child(3){
+	grid-template-areas: 
+		"image_other text_other"
+	;
+	grid-template-columns: auto 55%;
+}
 /*****************************************/
 .wrapper_fourth .other_block .block{
 	position: relative;
@@ -1017,9 +1023,6 @@ footer{
 	background-image: url("../bkg/trenya_bkg.jpg");
 }
 /*Второй блок страницы тренажёрного зала*/
-.trenya__wrapper_second{
-	background: #fff;
-}
 .trenya__wrapper_second .container .block{
 	width: 360px;
 	height: 360px;
@@ -1103,6 +1106,7 @@ footer{
 .trenya__wrapper_fourth .other_block .text_block a:hover{
 	color: #575757;
 }
+
 /*/ОФОРМЛЕНИЕ ДЛЯ СТРАНИЦЫ ТУРИСТИЧЕКОГО КЛУБА/*/
 /*Хедер туристического клуба*/
 #turist__header #nav_list .nav_element:nth-child(3) .invisible{
@@ -1614,12 +1618,11 @@ footer{
 	min-height: 550px;
 }
 .text_sup_second{
-	font-family: 'sans-serif';
 	justify-self: center;
 }
 .text_sup_second h2{
 	position: relative;
-	font-size: 35px;
+	font-size: 28px;
 }
 .text_sup_second h2 .invisible{
 	opacity: 1;
@@ -1639,7 +1642,7 @@ footer{
 	background: #000;
 	width: 300px;
 	height: 350px;
-	border-radius: 2px;
+	border-radius: 4px 4px 0 0;
 }
 .dance__wrapper_second .container .block .under_text{
 	padding: 5px;
@@ -2329,29 +2332,27 @@ footer{
 .psiholog__wrapper_third .container{
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(350px, 2fr));
-	grid-gap: 2rem;
+	grid-gap: 20px;
 	justify-items: center;
+	overflow: hidden;
+	transition-duration: .5s;
 }
 .psiholog__wrapper_third .container .block{
 	display: grid;
 	width: 100%;
 	grid-template-rows: 35px auto;
-	min-height: 210px;
 	grid-row-gap: 10px;
 	position: relative;
 	background: #fff;
-	/*box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);*/
-	box-shadow: 0 0 10px 3px rgba(100, 100, 100, 0.2);
+	/*box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 0 10px 3px rgba(100, 100, 100, 0.2);*/
 	padding: 0 2rem 1rem 2rem;
 	color: #78909c;
 	cursor: default;
 	border-radius: 3px;
 	opacity: 1;
 	transition-duration: .6s;
-}
-.psiholog__wrapper_third .container .block.hide{
-	display: none;
-	opacity: 0;
+	min-height: 233px;
 }
 .symbol{
 	font-weight: 500;
@@ -4325,7 +4326,7 @@ footer{
 	}
 	.psiholog__wrapper_third .container{
 		grid-auto-flow: row;
-		grid-row-gap: 2rem;
+		grid-row-gap: 20px;
 		grid-template-columns: repeat(auto-fit, minmax(400px, 2fr));
 	}
 	.psiholog__wrapper_third .container .block p:not(.client__name p){
@@ -4901,7 +4902,7 @@ footer{
 	.psiholog__wrapper_third .container{
 		display: grid;
 		grid-template-columns: repeat(auto-fit, minmax(500px, 2fr));
-		grid-gap: 2rem;
+		grid-gap: 20px;
 		justify-items: center;
 	}
 

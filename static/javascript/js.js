@@ -190,17 +190,20 @@ const popupActive = document.querySelector(".telefon_children");
 let popupWindow = document.querySelector("#popup");
 let popupContent = document.querySelector(".popup_content");
 let close = document.querySelector("#close");
+
 	//Код вызова
 	popupActive.addEventListener("click", function(){
 		popupWindow.style.top = "0";
 		popupWindow.style.left = "0";
 		document.body.style.overflowY = "hidden"
 	})
+
 	//Код закрытия
 	close.addEventListener("click", function(){
 		popupWindow.style.top = "";
 		document.body.style.overflowY = "scroll";
 	})
+
 	window.onclick = function(event){
 		if(event.target == popup){
 			popupWindow.style.position = "";
@@ -251,46 +254,61 @@ if(window.screen.width > 1024){
 }
 //Прогрузка блоков с отзывами на странице психологической помощи
 try{
-	if(window.screen.width > 420){
-		let buttonDisplay = document.querySelector(".more");
+	const buttonDisplay = document.querySelector(".more");
+	const containerReviews = document.querySelector(".psiholog__wrapper_third .container");
+	const blockHeight = document.querySelector(".psiholog__wrapper_third .container .block").clientHeight;
 
-		buttonDisplay.addEventListener("click", function(){
-			let blocksPsihologiya = document.querySelectorAll(".hide");
+	containerReviews.style.height = (blockHeight + 20) + "px";
 
-			for(let i = 0; i < 3 && i < blocksPsihologiya.length; i++){
-				blocksPsihologiya[i].classList.remove("hide");
-				
+	let inRow = window.screen.width > 420 ? 3 : 2;
+	let flag = true;
+
+
+	buttonDisplay.addEventListener("click", function(){
+		let hideBlocks = document.querySelectorAll(".psiholog__wrapper_third .container .block.hide");
+		let move = Number(containerReviews.style.height.slice(0, -2));
+
+		if (flag) {
+			if (hideBlocks.length <= 0){
+				flag = false;
+				buttonDisplay.children[0].innerHTML = "Скрыть отзывы?";
+				buttonDisplay.children[0].style.textDecoration = "underline";
 			}
-
-			if(document.querySelectorAll(".hide").length == 0){
-				buttonDisplay.style.display = "none";
+			else{
+				try{
+					for (let i=0; i<inRow; ++i){
+						hideBlocks[i].classList.remove("hide");
+					}
+				}
+				catch(err) {
+					for (let i=0; i<hideBlocks.length; ++i){
+						hideBlocks[i].classList.remove("hide");
+					}
+					flag = false;
+					buttonDisplay.children[0].innerHTML = "Скрыть отзывы?";
+					buttonDisplay.children[0].style.textDecoration = "underline";
+				}
+				hideBlocks = document.querySelectorAll(".psiholog__wrapper_third .container .block.hide");
+				move += blockHeight + 20;
+				containerReviews.style.height = move + "px";
 			}
-		})
-	}
-	else if(window.screen.width <= 420){
-		let blocksPsiho = document.querySelectorAll(".psiholog__wrapper_third .container .block");
-
-		for(let el = 2; el < 3 && el < blocksPsiho.length; el++ ){
-			blocksPsiho[el].classList.add("hide");
 		}
-
-		let buttonDisplay = document.querySelector(".more");
-
-		buttonDisplay.addEventListener("click", function(){
-			let blocksPsihologiya = document.querySelectorAll(".hide");
-
-			for(let i = 0; i < 2 && i < blocksPsihologiya.length; i++){
-				blocksPsihologiya[i].classList.remove("hide");
+		else {
+			let allBlocks = document.querySelectorAll(".psiholog__wrapper_third .container .block");
+			for (let block=3; block<allBlocks.length; ++block){
+				allBlocks[block].classList.add("hide");
+				containerReviews.style.height = (blockHeight + 20) + "px";
+				buttonDisplay.children[0].innerHTML = "Больше отзывов";
+				buttonDisplay.children[0].style.textDecoration = "none";
+				flag = true;
 			}
-
-			if(document.querySelectorAll(".hide").length == 0){
-				buttonDisplay.style.display = "none";
-			}
-		})
-	}
-}catch(err){
-	//console.warn("Не психологическая помощь")
+		}
+	})
 }
+catch(err){
+	console.error(err);
+}
+
 
 
 //Попапы на странице Школы Танцев

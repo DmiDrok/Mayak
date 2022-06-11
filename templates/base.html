@@ -16,12 +16,6 @@
     <body>
         <!--Хедер тут-->
         <header>
-            {% if admin %}
-                <a href="{{ url_for('admin.index') }}" id="admin_block" title="Перейти в админ-панель">
-                    <img src="{{ url_for('static', filename='img/admin.png') }}">
-                </a>
-            {% endif %}
-
             <div id="sup_block_header">
                 <a href="{{ url_for('index') }}" id="image_header_block">
                     <img src="{{ url_for('static', filename='img/logo.png') }}" id="image_header">
@@ -46,9 +40,8 @@
                     <i class="dot"></i>
     
                     <ul id="menu_social">
-                        <li class="social_el"><a href="#" target="_blank" class="social_link" title="Контакты">Контакты</a></li>
+                        <li class="social_el"><a href="{{ url_for('contacts') }}" target="_blank" class="social_link" title="Контакты">Контакты</a></li>
                         <li class="social_el"><a href="https://vk.com/mcmayak" target="_blank" class="social_link" title="Группа ВКонтакте">ВКонтакте</a></li>
-                        <!--<li class="social_el"><a href="{{ url_for('all_posts') }}" class="social_link">Новости</a></li>-->
                         <li class="social_el telefon_children"><span class="social_link" title="Телефон доверия">Телефон доверия</span></li>
                     </ul>
                 </div>
