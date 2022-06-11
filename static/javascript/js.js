@@ -1,50 +1,48 @@
 //Функция для выпадающих списков
-function list(){
-	try{
-		//Алгоритм для выпадающих списков
-		let menu = document.querySelector("#dots_header");
-			menuList = document.querySelector("#menu_social")
-			navLink = document.querySelector(".nav_element");
-			navServices = document.querySelector("#services_menu");
-			burgerBlock = document.querySelector("#burger_mobile");
-			burgerList = document.querySelector('.burger_list');
-		//Для трёхточечного меню
-		menu.addEventListener("mouseover", function(){
-			menuList.style.display = "block";
-		})
 
-		menu.addEventListener("mouseout", function(){
-			menuList.style.display = "none";
-		})
+try{
+	//Алгоритм для выпадающих списков
+	let menu = document.querySelector("#dots_header");
+	let	menuList = document.querySelector("#menu_social");
+	let	navLink = document.querySelector(".nav_element");
+	let	navServices = document.querySelector("#services_menu");
+	let	burgerBlock = document.querySelector("#burger_mobile");
+	let	burgerList = document.querySelector('.burger_list');
+	
+	//Для трёхточечного меню
+	menu.addEventListener("mouseover", function(){
+		menuList.style.display = "block";
+	})
 
-		//Для списка услуг
-		navLink.addEventListener("mouseover", function(){
-			navServices.style.display = "block";
-		})
+	menu.addEventListener("mouseout", function(){
+		menuList.style.display = "none";
+	})
 
-		navLink.addEventListener("mouseout", function(){
-			navServices.style.display = "none"
-		})
+	//Для списка услуг
+	navLink.addEventListener("mouseover", function(){
+		navServices.style.display = "block";
+	})
 
-		//Для меню мобильных устройств
-		burgerBlock.addEventListener("mouseover", function(){
-			burgerList.style.display = "block";
-		})
+	navLink.addEventListener("mouseout", function(){
+		navServices.style.display = "none"
+	})
 
-		burgerBlock.addEventListener("mouseout", function(){
-			burgerList.style.display = "none";
-		})
-	}
-	catch(err){
+	//Для меню мобильных устройств
+	burgerBlock.addEventListener("mouseover", function(){
+		burgerList.style.display = "block";
+	})
 
-	}
+	burgerBlock.addEventListener("mouseout", function(){
+		burgerList.style.display = "none";
+	})
 }
+catch(err){
 
-list()
+}
 
 //Слайдер третьего блока
 try{
-	function sliderFect(){
+	
 	const sliderLineThird = document.querySelector('.container_line');
 	sliderLineThird.style.width = document.querySelector(".wrapper_third .container_line .block").offsetWidth * document.querySelectorAll(".wrapper_third .container_line .block").length + "px";
 	const MAX = Number(sliderLineThird.clientWidth) - Number(document.querySelector(".wrapper_third .container_line .block").clientWidth)
@@ -52,7 +50,7 @@ try{
 
 	let sliderLeft = document.querySelector("#blue_slider_left");
 	let sliderRight = document.querySelector("#blue_slider_right");
-	
+
 	let leftOff = 0;
 	let next = document.querySelector('#next');
 	let prev = document.querySelector('#prev');
@@ -65,20 +63,20 @@ try{
 		sliderLineThird.style.left = -leftOff + "px";
 	})
 
-	 prev.addEventListener("click", function(){
-	 	leftOff = leftOff - document.querySelector(".wrapper_third .container_line .block").offsetWidth;
-	 	if(leftOff < MIN){
-	 		leftOff = MAX;
-	 	}
-	 	sliderLineThird.style.left = -leftOff + "px";
+		prev.addEventListener("click", function(){
+		leftOff = leftOff - document.querySelector(".wrapper_third .container_line .block").offsetWidth;
+		if(leftOff < MIN){
+			leftOff = MAX;
+		}
+		sliderLineThird.style.left = -leftOff + "px";
 	})
 
 	/*sliderLeft.addEventListener("touchstart", function(e){
 		leftOff = leftOff - document.querySelector(".wrapper_third .container_line .block").offsetWidth;
-	 	if(leftOff < MIN){
-	 		leftOff = MAX;
-	 	}
-	 	sliderLineThird.style.left = -leftOff + "px";
+		if(leftOff < MIN){
+			leftOff = MAX;
+		}
+		sliderLineThird.style.left = -leftOff + "px";
 	})
 
 	sliderRight.addEventListener("touchstart", function(e){
@@ -89,14 +87,13 @@ try{
 		sliderLineThird.style.left = -leftOff + "px";
 	})*/
 
-	}
-sliderFect()
-}catch(err){
-	//console.warn("Слайдер третьего блока не обнаружен.")
+}
+catch(err){
+	
 }
 
-try{
 //Слайдер первого блока
+try{
 const sliderWrapFirst = document.querySelector('.slider');
 const sliderLine = document.querySelector('.slider_line');
 

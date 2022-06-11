@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 from forms import ContactSocio, ContactYurist
-
+from manage_mails.text import html_text
 
 import re
 import threading
@@ -25,18 +25,11 @@ app.config["CSRF_ENABLED"] = True
 app.config["MAIL_SERVER"] = "smtp.mail.ru"
 app.config["MAIL_PORT"] = 587
 app.config["MAIL_USE_TLS"] = True
-app.config["MAIL_USERNAME"] = "to-mayak@mail.ru"
-app.config["MAIL_PASSWORD"] = "L86PUUzBTY6NKxXybFs4"
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Data.db"
+app.config["MAIL_USERNAME"] = os.environ.get("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.environ.get("MAIL_PASSWORD")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///Data.db"
 app.config["COMMIT_ON_TEARDOWN"] = True
-
-
-##Аватар по умолчанию
-def default_avatar():
-    with app.app_context():
-        with app.open_resource(os.path.join(app.root_path, "static", "img", "admin.png"), "rb") as file:
-            return file.read()
 
 ##Отзывы юристов
 class YuristReviews(db.Model):
@@ -52,12 +45,14 @@ mail = Mail(app) ##Объект для отправки сообщений
 
 ##Функция отправки сообщения
 def send_mail(subj, telefon_user, email, content, *args, **kwargs):
-    msg = Message(subject=subj, sender=app.config["MAIL_USERNAME"], recipients=["drobkov155099@gmail.com"])
-    #msg.html = html_text.replace("{{subject}}", subj).replace("{{telefon}}", telefon_user).replace("{{content}}", content).replace("{{email}}", email)
-    
-    with app.app_context():
-        msg.html = render_template("needful/tmpl_to_email.html", subject=subj, telefon=telefon_user, content=content, email=email)
-        mail.send(msg)
+    try:
+        msg = Message(subject=subj, sender=app.config["MAIL_USERNAME"], recipients=["drobkov155099@gmail.com"])
+        
+        with app.app_context():
+            msg.html = render_template("needful/tmpl_to_email.html", subject=subj, telefon=telefon_user, content=content, email=email)
+            mail.send(msg)
+    except Exception as error:
+        print(error)
 
 ##Для класса .active_link в навигации
 links = {
@@ -85,14 +80,16 @@ def is_admin() -> bool:
     return True if session.get("admin", False) == True else False
 
 
-admin = False
-data = None
+##Выполняется перед первым запросом
+@app.before_first_request
+def before_first_request():
+    """До первого запроса будем устанавливать время жизни сессии. По умолчанию - 1 минута"""
+    session.permanent = True
+    app.permanent_session_lifetime = 60
+
+##Выполняется перед каждым запросом
 @app.before_request
 def before_request():
-    """До первого запроса будем устанавливать время жизни сессии. По умолчанию - 1 час"""
-    session.permanent = True
-    app.permanent_session_lifetime = 60*60
-
     if not hasattr(g, "links"):
         g.links = {
             "index": "",
@@ -175,7 +172,6 @@ def socio_psych():
     return render_template(
         "socio_psych.html",
         title="Социально-психологическая помощь",
-        links=g.links, admin=admin,
         form=form,
         telefon_user=telefon_user,
         email_user=email_user,
@@ -237,7 +233,6 @@ def yurist():
         "yurist.html",
         title="Юридическая помощь", 
         links=g.links, 
-        admin=admin,
         reviews=reviews,
         form=form,
         telefon_user=telefon_user,
@@ -248,59 +243,13 @@ def yurist():
         not_correct_form=not_correct_form
         )
 
+##Получить аватар из БД по айди
 @app.route("/get_avatar/<id>")
 def get_avatar(id):
     res = make_response(YuristReviews.query.filter_by(id=id).first().avatar, 200)
     res.headers["Content-Type"] = "image/jpg"
 
     return res 
-
-##Обработчик страницы с отзывами о юристах
-@app.route("/yurist/feedback")
-def yurist_feedback():
-    reset_all_save_one(None)
-    return render_template("yurist_feedback.html", title="Юридическая помощь (отзывы)", links=g.links, admin=admin)
-
-##Обработчик страницы с командой юристов
-@app.route("/yurist/team")
-def yurist_team():
-    reset_all_save_one(None)
-    return render_template("yurist_team.html", title="Команда юристов", links=g.links, admin=admin)
-
-##Обработчик отображения страницы с постами
-@app.route("/all_posts")
-@app.route("/posts")
-def all_posts():
-    reset_all_save_one(None)
-
-    data = Data(g.conn)
-    all_posts = data.get_all_posts()
-    if len(all_posts) < 0:
-        all_posts = None
-
-    return render_template("all_posts.html", links=g.links, posts=all_posts, admin=admin)
-
-##Обработчик отображения одного из постов
-@app.route("/post/<post_id>")
-def post(post_id):
-    reset_all_save_one(None)
-
-    data = Data(g.conn)
-    post_to_display = data.get_post_by_id(post_id)
-
-    return render_template("post.html", links=links, admin=admin, post=post_to_display)
-
-##Обработчик для вывода картинки в блок поста
-@app.route("/post_img/<post_id>")
-def post_image(post_id):
-
-    data = Data(g.conn)
-    image = data.get_image_by_id(post_id)
-
-    response = make_response(image, 200)
-    response.headers["Content-Type"] = "image/png"
-
-    return response
 
 ##Сработает когда произойдёт уничтожение контекста приложения
 @app.teardown_appcontext
